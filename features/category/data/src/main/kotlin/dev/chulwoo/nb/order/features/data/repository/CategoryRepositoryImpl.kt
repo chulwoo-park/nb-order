@@ -10,6 +10,10 @@ class CategoryRepositoryImpl(
     private val remoteSource: CategoryRemoteSource
 ) : CategoryRepository {
     override suspend fun get(): List<Category> {
-        TODO("Not yet implemented")
+        return try {
+            localSource.get()
+        } catch (e: Exception) {
+            remoteSource.get()
+        }
     }
 }
