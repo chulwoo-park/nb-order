@@ -1,11 +1,11 @@
-package dev.chulwoo.nb.order.features.data.repository
+package dev.chulwoo.nb.order.features.category.data.repository
 
 import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
-import dev.chulwoo.nb.order.features.data.source.CategoryLocalSource
-import dev.chulwoo.nb.order.features.data.source.CategoryRemoteSource
+import dev.chulwoo.nb.order.features.category.data.source.CategoryLocalSource
+import dev.chulwoo.nb.order.features.category.data.source.CategoryRemoteSource
 import dev.chulwoo.nb.order.features.domain.model.Category
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo

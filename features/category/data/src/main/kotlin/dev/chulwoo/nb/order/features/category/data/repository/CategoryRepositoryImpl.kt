@@ -1,7 +1,7 @@
-package dev.chulwoo.nb.order.features.data.repository
+package dev.chulwoo.nb.order.features.category.data.repository
 
-import dev.chulwoo.nb.order.features.data.source.CategoryLocalSource
-import dev.chulwoo.nb.order.features.data.source.CategoryRemoteSource
+import dev.chulwoo.nb.order.features.category.data.source.CategoryLocalSource
+import dev.chulwoo.nb.order.features.category.data.source.CategoryRemoteSource
 import dev.chulwoo.nb.order.features.domain.model.Category
 import dev.chulwoo.nb.order.features.domain.repository.CategoryRepository
 

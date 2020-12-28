@@ -1,4 +1,4 @@
-package dev.chulwoo.nb.order.features.data.source
+package dev.chulwoo.nb.order.features.category.data.source
 
 import dev.chulwoo.nb.order.features.domain.model.Category
 
