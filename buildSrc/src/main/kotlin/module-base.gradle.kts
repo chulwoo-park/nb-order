@@ -47,4 +47,6 @@ dependencies {
 
     implementation(Dependencies.kotlin)
     testImplementation(Dependencies.Test.junit)
+    testImplementation(Dependencies.Test.Mockito.kotlin)
+    testImplementation(Dependencies.Test.coroutine)
 }

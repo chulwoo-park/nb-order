@@ -12,6 +12,13 @@ object Dependencies {
 
     object Test {
         const val junit = "junit:junit:${Versions.Test.junit}"
+
+        object Mockito {
+            const val core = "org.mockito:mockito-core:${Versions.Test.mockito}"
+            const val kotlin = "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
+        }
+
+        const val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2"
     }
 
     object AndroidTest {
