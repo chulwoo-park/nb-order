@@ -2,8 +2,8 @@ package dev.chulwoo.nb.order.features.data.repository
 
 import com.nhaarman.mockitokotlin2.doAnswer
 import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.verifyZeroInteractions
 import dev.chulwoo.nb.order.features.data.source.CategoryLocalSource
 import dev.chulwoo.nb.order.features.data.source.CategoryRemoteSource
 import dev.chulwoo.nb.order.features.domain.model.Category
@@ -25,7 +25,7 @@ class CategoryRepositoryImplTest {
 
             repository.get()
             verify(localSource).get()
-            verifyZeroInteractions(remoteSource.get())
+            verify(remoteSource, never()).get()
         }
     }
 
@@ -33,7 +33,7 @@ class CategoryRepositoryImplTest {
     fun `Given local error When invoke get Then use remote data`() {
         runBlocking {
             val localSource = mock<CategoryLocalSource> {
-                onBlocking { get() } doAnswer { throw Throwable() }
+                onBlocking { get() } doAnswer { throw Exception() }
             }
             val remoteSource = mock<CategoryRemoteSource> {
                 onBlocking { get() } doAnswer { listOf(Category(1), Category(2)) }
@@ -52,17 +52,16 @@ class CategoryRepositoryImplTest {
     fun `Given local error and remote error When invoke get Then throw error`() {
         runBlocking {
             val localSource = mock<CategoryLocalSource> {
-                onBlocking { get() } doAnswer { throw Throwable() }
+                onBlocking { get() } doAnswer { throw Exception() }
             }
             val remoteSource = mock<CategoryRemoteSource> {
-                onBlocking { get() } doAnswer { throw Throwable() }
+                onBlocking { get() } doAnswer { throw Exception() }
             }
             val repository = CategoryRepositoryImpl(localSource, remoteSource)
 
-            assertThrows(Throwable::class.java) { runBlocking { repository.get() } }
+            assertThrows(Exception::class.java) { runBlocking { repository.get() } }
             verify(localSource).get()
             verify(remoteSource).get()
-
         }
     }
 }
