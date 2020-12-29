@@ -1,0 +1,5 @@
+<resources>
+
+    <string name="desc_category_before">이전으로 이동</string>
+    <string name="desc_category_next">다음으로 이동</string>
+</resources>

@@ -18,7 +18,7 @@ class CategoryProductFragment : Fragment() {
     }
 
     fun updateCategory(category: Category) {
-        TODO()
+
     }
 
     override fun onCreateView(

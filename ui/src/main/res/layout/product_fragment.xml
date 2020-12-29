@@ -6,13 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".order.ProductFragment">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/tab_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:divider="@color/black"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/category_before"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/desc_category_before"
+            android:minWidth="40dp"
+            app:icon="@drawable/ic_navigate_before_24px"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:tabGravity="center"
+            app:tabMode="scrollable" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/category_next"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/desc_category_next"
+            android:minWidth="40dp"
+            app:icon="@drawable/ic_navigate_next_24px"
+            app:iconGravity="textStart"
+            app:iconPadding="0dp" />
+    </LinearLayout>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/pager"
@@ -21,7 +54,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+        app:layout_constraintTop_toBottomOf="@id/tab_container" />
 
     <androidx.core.widget.ContentLoadingProgressBar
         android:id="@+id/loading_indicator"
@@ -41,5 +74,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+        app:layout_constraintTop_toBottomOf="@id/tab_container" />
 </androidx.constraintlayout.widget.ConstraintLayout>

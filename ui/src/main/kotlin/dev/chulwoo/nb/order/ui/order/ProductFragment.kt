@@ -52,6 +52,12 @@ class ProductFragment : Fragment() {
             }.attach()
 
             error.retryButton.setOnClickListener { categoryViewModel.load() }
+            categoryBefore.setOnClickListener {
+                categoryViewModel.selectBefore()
+            }
+            categoryNext.setOnClickListener {
+                categoryViewModel.selectNext()
+            }
         }
     }
 
@@ -65,8 +71,17 @@ class ProductFragment : Fragment() {
                 }
                 is CategoryState.Success -> {
                     error.root.isVisible = false
-                    categoryAdapter.update(state.data)
-                    tabLayout.getTabAt(state.data.indexOfFirst { it.isSelected })?.select()
+
+                    val categories = state.data
+                    categoryAdapter.update(categories)
+                    tabLayout.getTabAt(categories.indexOfFirst { it.isSelected })?.select()
+                    categories.firstOrNull()?.let {
+                        categoryBefore.isEnabled = !it.isSelected
+                    }
+
+                    categories.lastOrNull()?.let {
+                        categoryNext.isEnabled = !it.isSelected
+                    }
                 }
                 is CategoryState.Failure -> {
                     error.root.isVisible = true
