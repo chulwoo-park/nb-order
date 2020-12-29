@@ -18,7 +18,7 @@ class CategoryRepositoryImplTest {
     fun `Given local data When invoke get Then use local data only`() {
         runBlocking {
             val localSource = mock<CategoryLocalSource> {
-                onBlocking { get() } doAnswer { listOf(Category(1), Category(2)) }
+                onBlocking { get() } doAnswer { listOf(Category(1, "1"), Category(2, "2")) }
             }
             val remoteSource = mock<CategoryRemoteSource>()
             val repository = CategoryRepositoryImpl(localSource, remoteSource)
@@ -36,14 +36,14 @@ class CategoryRepositoryImplTest {
                 onBlocking { get() } doAnswer { throw Exception() }
             }
             val remoteSource = mock<CategoryRemoteSource> {
-                onBlocking { get() } doAnswer { listOf(Category(1), Category(2)) }
+                onBlocking { get() } doAnswer { listOf(Category(1, "1"), Category(2, "2")) }
             }
             val repository = CategoryRepositoryImpl(localSource, remoteSource)
 
             val result = repository.get()
             verify(localSource).get()
             verify(remoteSource).get()
-            assertThat(result, equalTo(listOf(Category(1), Category(2))))
+            assertThat(result, equalTo(listOf(Category(1, "1"), Category(2, "2"))))
 
         }
     }

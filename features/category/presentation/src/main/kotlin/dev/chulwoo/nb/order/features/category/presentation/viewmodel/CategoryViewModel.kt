@@ -25,7 +25,7 @@ class CategoryViewModel(
             _states.value = CategoryState.Loading
             _states.value = try {
                 CategoryState.Success(getCategories().mapIndexed { index, entity ->
-                    Category(entity.id, isSelected = index == 0)
+                    Category(entity.id, entity.name, isSelected = index == 0)
                 })
             } catch (e: Exception) {
                 CategoryState.Failure(e)

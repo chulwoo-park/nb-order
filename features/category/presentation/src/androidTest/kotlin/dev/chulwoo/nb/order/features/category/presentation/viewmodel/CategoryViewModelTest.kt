@@ -50,7 +50,12 @@ class CategoryViewModelTest {
     fun testLoadSuccess() {
         // Given data When invoke load Then emit states loading - success
         runBlocking {
-            whenever(repository.get()).thenAnswer { listOf(CategoryEntity(1), CategoryEntity(2)) }
+            whenever(repository.get()).thenAnswer {
+                listOf(
+                    CategoryEntity(1, "1"),
+                    CategoryEntity(2, "2")
+                )
+            }
         }
 
         mainCoroutineRule.dispatcher.runBlockingTest {
@@ -58,7 +63,7 @@ class CategoryViewModelTest {
             viewModel.load()
             verify(observer).onChanged(CategoryState.Loading)
             verify(observer).onChanged(
-                CategoryState.Success(listOf(Category(1), Category(2)))
+                CategoryState.Success(listOf(Category(1, "1"), Category(2, "2")))
             )
         }
     }
@@ -83,7 +88,12 @@ class CategoryViewModelTest {
     fun testDefaultSelectedCategory() {
         // Given data When invoke load Then first category should be selected
         runBlocking {
-            whenever(repository.get()).thenAnswer { listOf(CategoryEntity(1), CategoryEntity(2)) }
+            whenever(repository.get()).thenAnswer {
+                listOf(
+                    CategoryEntity(1, "1"),
+                    CategoryEntity(2, "2")
+                )
+            }
         }
 
         mainCoroutineRule.dispatcher.runBlockingTest {
@@ -93,8 +103,8 @@ class CategoryViewModelTest {
             verify(observer).onChanged(
                 CategoryState.Success(
                     listOf(
-                        Category(1, true),
-                        Category(2, false)
+                        Category(1, "1", true),
+                        Category(2, "2", false)
                     )
                 )
             )
@@ -105,7 +115,12 @@ class CategoryViewModelTest {
     fun testCategorySelect() {
         // When invoke select Then that category should be selected
         runBlocking {
-            whenever(repository.get()).thenAnswer { listOf(CategoryEntity(1), CategoryEntity(2)) }
+            whenever(repository.get()).thenAnswer {
+                listOf(
+                    CategoryEntity(1, "1"),
+                    CategoryEntity(2, "2")
+                )
+            }
         }
 
         mainCoroutineRule.dispatcher.runBlockingTest {
@@ -113,7 +128,7 @@ class CategoryViewModelTest {
             viewModel.select(1)
             verify(observer).onChanged(
                 CategoryState.Success(
-                    listOf(Category(1, false), Category(2, true))
+                    listOf(Category(1, "1", false), Category(2, "2", true))
                 )
             )
         }

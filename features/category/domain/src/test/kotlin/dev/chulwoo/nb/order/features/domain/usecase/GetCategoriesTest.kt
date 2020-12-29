@@ -16,12 +16,12 @@ class GetCategoriesTest {
     fun `When invoke GetCategories Then returns data from repository`() {
         runBlocking {
             val repository = mock<CategoryRepository> {
-                onBlocking { get() } doAnswer { listOf(Category(1), Category(2)) }
+                onBlocking { get() } doAnswer { listOf(Category(1, "1"), Category(2, "2")) }
             }
             val getCategories = GetCategories(repository)
             val result = getCategories()
             verify(repository).get()
-            assertEquals(listOf(Category(1), Category(2)), result)
+            assertEquals(listOf(Category(1, "1"), Category(2, "2")), result)
         }
     }
 

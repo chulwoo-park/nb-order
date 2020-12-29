@@ -26,7 +26,7 @@ val tmpModule = module {
     single<CategoryLocalSource> {
         object : CategoryLocalSource {
             override suspend fun get(): List<Category> {
-                return listOf(Category(0), Category(1), Category(2))
+                return listOf(Category(0, "local0"), Category(1, "local1"), Category(2, "local2"))
             }
         }
     }
@@ -34,7 +34,11 @@ val tmpModule = module {
     single<CategoryRemoteSource> {
         object : CategoryRemoteSource {
             override suspend fun get(): List<Category> {
-                return listOf(Category(0), Category(1), Category(2))
+                return listOf(
+                    Category(0, "remote0"),
+                    Category(1, "remote1"),
+                    Category(2, "remote2")
+                )
             }
         }
     }

@@ -48,7 +48,7 @@ class ProductFragment : Fragment() {
         with(binding) {
             pager.adapter = categoryAdapter
             TabLayoutMediator(tabLayout, pager) { tab, position ->
-                tab.text = categoryAdapter.items[position].id.toString()
+                tab.text = categoryAdapter.items[position].name
             }.attach()
 
             error.retryButton.setOnClickListener { categoryViewModel.load() }
