@@ -1,9 +1,6 @@
 package dev.chulwoo.nb.order.features.category.data.repository
 
-import com.nhaarman.mockitokotlin2.doAnswer
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.never
-import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.*
 import dev.chulwoo.nb.order.features.category.data.source.CategoryLocalSource
 import dev.chulwoo.nb.order.features.category.data.source.CategoryRemoteSource
 import dev.chulwoo.nb.order.features.domain.model.Category
@@ -45,6 +42,44 @@ class CategoryRepositoryImplTest {
             verify(remoteSource).get()
             assertThat(result, equalTo(listOf(Category(1, "1"), Category(2, "2"))))
 
+        }
+    }
+
+    @Test
+    fun `Given local error When invoke get Then save data from remote to local`() {
+        runBlocking {
+            val localSource = mock<CategoryLocalSource> {
+                onBlocking { get() } doAnswer { throw Exception() }
+            }
+            val remoteSource = mock<CategoryRemoteSource> {
+                onBlocking { get() } doAnswer { listOf(Category(1, "1"), Category(2, "2")) }
+            }
+            val repository = CategoryRepositoryImpl(localSource, remoteSource)
+
+            repository.get()
+            verify(localSource).get()
+            verify(remoteSource).get()
+            verify(localSource).set(listOf(Category(1, "1"), Category(2, "2")))
+        }
+    }
+
+    @Test
+    fun `Given save error When invoke get Then use remote data without error`() {
+        runBlocking {
+            val localSource = mock<CategoryLocalSource> {
+                onBlocking { get() } doAnswer { throw Exception() }
+                onBlocking { set(any()) } doAnswer { throw Exception() }
+            }
+            val remoteSource = mock<CategoryRemoteSource> {
+                onBlocking { get() } doAnswer { listOf(Category(1, "1"), Category(2, "2")) }
+            }
+            val repository = CategoryRepositoryImpl(localSource, remoteSource)
+
+            val result = repository.get()
+            verify(localSource).get()
+            verify(remoteSource).get()
+            verify(localSource).set(listOf(Category(1, "1"), Category(2, "2")))
+            assertThat(result, equalTo(listOf(Category(1, "1"), Category(2, "2"))))
         }
     }
 
