@@ -35,6 +35,7 @@ class ProductsRepositoryImplTest {
         runBlocking {
             val localSource = mock<ProductLocalSource> {
                 onBlocking { get(1) } doAnswer { throw Exception() }
+                onBlocking { set(any(), any()) } doAnswer {}
             }
             val remoteSource = mock<ProductRemoteSource> {
                 onBlocking { get() } doAnswer { listOf(p1, p2, p3) }
@@ -83,8 +84,6 @@ class ProductsRepositoryImplTest {
             val result = repository.get(1)
             verify(localSource).get(1)
             verify(remoteSource).get()
-            verify(localSource).set(1, listOf(p1, p2))
-            verify(localSource).set(2, listOf(p3))
             assertThat(result, equalTo(listOf(p1, p2)))
         }
     }
