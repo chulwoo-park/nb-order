@@ -4,10 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import dev.chulwoo.nb.order.common.test.presentation.MainCoroutineScopeRule
 import dev.chulwoo.nb.order.features.category.presentation.model.Category
 import dev.chulwoo.nb.order.features.category.presentation.state.CategoryState
@@ -51,37 +48,35 @@ class CategoryViewModelTest {
     fun testLoadSuccess() {
         // Given data When invoke load Then emit states loading - success
         runBlocking {
-            whenever(repository.get()).thenAnswer {
-                listOf(
-                    CategoryEntity(1, "1"),
-                    CategoryEntity(2, "2")
-                )
-            }
+            whenever(repository.get()).thenAnswer { listOf<Category>() }
         }
 
         mainCoroutineRule.dispatcher.runBlockingTest {
-            verify(observer).onChanged(CategoryState.Initial)
             viewModel.load()
+        }
+
+        inOrder(observer) {
+            verify(observer).onChanged(CategoryState.Initial)
             verify(observer).onChanged(CategoryState.Loading)
-            verify(observer).onChanged(
-                CategoryState.Success(listOf(Category(1, "1"), Category(2, "2")))
-            )
+            verify(observer).onChanged(isA<CategoryState.Success>())
         }
     }
 
     @Test
     fun testLoadFailure() {
         // Given error When invoke load Then emit states loading - failure
-        val error = Exception()
         runBlocking {
-            whenever(repository.get()).thenAnswer { throw  error }
+            whenever(repository.get()).thenAnswer { throw  Exception() }
         }
 
         mainCoroutineRule.dispatcher.runBlockingTest {
-            verify(observer).onChanged(CategoryState.Initial)
             viewModel.load()
+        }
+
+        inOrder(observer) {
+            verify(observer).onChanged(CategoryState.Initial)
             verify(observer).onChanged(CategoryState.Loading)
-            verify(observer).onChanged(CategoryState.Failure(error))
+            verify(observer).onChanged(isA<CategoryState.Failure>())
         }
     }
 
@@ -98,8 +93,11 @@ class CategoryViewModelTest {
         }
 
         mainCoroutineRule.dispatcher.runBlockingTest {
-            verify(observer).onChanged(CategoryState.Initial)
             viewModel.load()
+        }
+
+        inOrder(observer) {
+            verify(observer).onChanged(CategoryState.Initial)
             verify(observer).onChanged(CategoryState.Loading)
             verify(observer).onChanged(
                 CategoryState.Success(
@@ -127,20 +125,24 @@ class CategoryViewModelTest {
         mainCoroutineRule.dispatcher.runBlockingTest {
             viewModel.load()
             viewModel.select(1)
-            verify(observer).onChanged(
-                CategoryState.Success(
-                    listOf(Category(1, "1", false), Category(2, "2", true))
-                )
-            )
         }
+
+        verify(observer).onChanged(
+            CategoryState.Success(
+                listOf(Category(1, "1", false), Category(2, "2", true))
+            )
+        )
     }
 
     @Test
     fun testCategorySelect_whenNotSucceedState() {
         // Given not succeed state When invoke select Then that state should be not changed
         mainCoroutineRule.dispatcher.runBlockingTest {
-            verify(observer).onChanged(CategoryState.Initial)
             viewModel.select(1)
+        }
+
+        inOrder(observer) {
+            verify(observer).onChanged(CategoryState.Initial)
             verifyNoMoreInteractions(observer)
         }
     }
@@ -158,8 +160,12 @@ class CategoryViewModelTest {
         }
 
         mainCoroutineRule.dispatcher.runBlockingTest {
-            verify(observer).onChanged(CategoryState.Initial)
             viewModel.load()
+            viewModel.selectNext()
+        }
+
+        inOrder(observer) {
+            verify(observer).onChanged(CategoryState.Initial)
             verify(observer).onChanged(CategoryState.Loading)
             verify(observer).onChanged(
                 CategoryState.Success(
@@ -169,7 +175,6 @@ class CategoryViewModelTest {
                     )
                 )
             )
-            viewModel.selectNext()
             verify(observer).onChanged(
                 CategoryState.Success(
                     listOf(
@@ -185,8 +190,11 @@ class CategoryViewModelTest {
     fun testCategorySelectNext_wheNotSucceedState() {
         // Given not succeed state When invoke selectNext Then state should be not changed
         mainCoroutineRule.dispatcher.runBlockingTest {
-            verify(observer).onChanged(CategoryState.Initial)
             viewModel.selectNext()
+        }
+
+        inOrder(observer) {
+            verify(observer).onChanged(CategoryState.Initial)
             verifyNoMoreInteractions(observer)
         }
     }
@@ -205,8 +213,13 @@ class CategoryViewModelTest {
         }
 
         mainCoroutineRule.dispatcher.runBlockingTest {
-            verify(observer).onChanged(CategoryState.Initial)
             viewModel.load()
+            viewModel.select(1)
+            viewModel.selectBefore()
+        }
+
+        inOrder(observer) {
+            verify(observer).onChanged(CategoryState.Initial)
             verify(observer).onChanged(CategoryState.Loading)
             verify(observer).onChanged(
                 CategoryState.Success(
@@ -216,7 +229,6 @@ class CategoryViewModelTest {
                     )
                 )
             )
-            viewModel.select(1)
             verify(observer).onChanged(
                 CategoryState.Success(
                     listOf(
@@ -225,7 +237,6 @@ class CategoryViewModelTest {
                     )
                 )
             )
-            viewModel.selectBefore()
             verify(observer).onChanged(
                 CategoryState.Success(
                     listOf(
@@ -241,8 +252,11 @@ class CategoryViewModelTest {
     fun testCategorySelectBefore_wheNotSucceedState() {
         // Given not succeed state When invoke selectBefore Then state should be not changed
         mainCoroutineRule.dispatcher.runBlockingTest {
-            verify(observer).onChanged(CategoryState.Initial)
             viewModel.selectBefore()
+        }
+
+        inOrder(observer) {
+            verify(observer).onChanged(CategoryState.Initial)
             verifyNoMoreInteractions(observer)
         }
     }
@@ -260,18 +274,14 @@ class CategoryViewModelTest {
         }
 
         mainCoroutineRule.dispatcher.runBlockingTest {
-            verify(observer).onChanged(CategoryState.Initial)
             viewModel.load()
-            verify(observer).onChanged(CategoryState.Loading)
-            verify(observer).onChanged(
-                CategoryState.Success(
-                    listOf(
-                        Category(1, "1", true),
-                        Category(2, "2", false)
-                    )
-                )
-            )
             viewModel.selectBefore()
+        }
+
+        inOrder(observer) {
+            verify(observer).onChanged(CategoryState.Initial)
+            verify(observer).onChanged(CategoryState.Loading)
+            verify(observer).onChanged(isA<CategoryState.Success>())
             verifyNoMoreInteractions(observer)
         }
     }
@@ -289,27 +299,30 @@ class CategoryViewModelTest {
         }
 
         mainCoroutineRule.dispatcher.runBlockingTest {
-            verify(observer).onChanged(CategoryState.Initial)
             viewModel.load()
+            viewModel.select(1)
+            viewModel.selectNext()
+        }
+
+        inOrder(observer) {
+            verify(observer).onChanged(CategoryState.Initial)
             verify(observer).onChanged(CategoryState.Loading)
             verify(observer).onChanged(
                 CategoryState.Success(
                     listOf(
                         Category(1, "1", true),
-                        Category(2, "2", false)
+                        Category(2, "2", false),
                     )
                 )
             )
-            viewModel.select(1)
             verify(observer).onChanged(
                 CategoryState.Success(
                     listOf(
                         Category(1, "1", false),
-                        Category(2, "2", true)
+                        Category(2, "2", true),
                     )
                 )
             )
-            viewModel.selectNext()
             verifyNoMoreInteractions(observer)
         }
     }
