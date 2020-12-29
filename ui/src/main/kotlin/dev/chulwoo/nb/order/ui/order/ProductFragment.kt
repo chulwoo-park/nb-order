@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.asLiveData
+import com.google.android.material.tabs.TabLayoutMediator
 import dev.chulwoo.nb.order.features.category.presentation.state.CategoryState
 import dev.chulwoo.nb.order.features.category.presentation.viewmodel.CategoryViewModel
 import dev.chulwoo.nb.order.ui.databinding.ProductFragmentBinding
@@ -18,6 +20,7 @@ class ProductFragment : Fragment() {
     private var _binding: ProductFragmentBinding? = null
     val binding: ProductFragmentBinding get() = _binding!!
 
+    private lateinit var categoryAdapter: CategoryAdapter
 
     companion object {
         fun newInstance() = ProductFragment()
@@ -39,20 +42,34 @@ class ProductFragment : Fragment() {
         categoryViewModel.load()
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        categoryAdapter = CategoryAdapter(this)
+        with(binding) {
+            pager.adapter = categoryAdapter
+            TabLayoutMediator(tabLayout, pager) { tab, position ->
+                tab.text = categoryAdapter.items[position].id.toString()
+            }.attach()
+
+            error.retryButton.setOnClickListener { categoryViewModel.load() }
+        }
+    }
+
     private fun onNewState(state: CategoryState) {
         with(binding) {
             when (state) {
                 CategoryState.Initial -> {
-                    message.text = "initial"
                 }
                 CategoryState.Loading -> {
-                    message.text = "loading"
+                    error.root.isVisible = false
                 }
                 is CategoryState.Success -> {
-                    message.text = "success: ${state.data}"
+                    error.root.isVisible = false
+                    categoryAdapter.update(state.data)
+                    tabLayout.getTabAt(state.data.indexOfFirst { it.isSelected })?.select()
                 }
                 is CategoryState.Failure -> {
-                    message.text = "failure: ${state.error}"
+                    error.root.isVisible = true
                 }
             }
         }
