@@ -40,4 +40,10 @@ class CategoryViewModel(
             category.copy(isSelected = i == index)
         })
     }
+
+    fun selectBefore() {
+    }
+
+    fun selectNext() {
+    }
 }
