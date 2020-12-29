@@ -8,6 +8,6 @@ data class GetProductsParam(val categoryId: Int)
 class GetProducts(private val repository: ProductRepository) {
 
     suspend operator fun invoke(param: GetProductsParam): List<Product> {
-        TODO()
+        return repository.get(param.categoryId)
     }
 }
