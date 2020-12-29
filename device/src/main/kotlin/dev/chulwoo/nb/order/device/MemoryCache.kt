@@ -16,6 +16,7 @@ import dev.chulwoo.nb.order.features.product.domain.model.Product
 class MemoryCache : CategoryLocalSource, ProductLocalSource {
 
     var categories: List<Category>? = null
+    var products: MutableMap<Int, List<Product>> = mutableMapOf()
 
     override suspend fun getCategories(): List<Category> {
         if (categories == null) throw CacheMissException()
@@ -28,10 +29,10 @@ class MemoryCache : CategoryLocalSource, ProductLocalSource {
     }
 
     override suspend fun getProducts(categoryId: Int): List<Product> {
-        TODO("Not yet implemented")
+        return products[categoryId] ?: throw CacheMissException()
     }
 
     override suspend fun setProducts(categoryId: Int, products: List<Product>) {
-        TODO("Not yet implemented")
+        this.products[categoryId] = products
     }
 }

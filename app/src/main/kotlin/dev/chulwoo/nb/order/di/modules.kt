@@ -35,21 +35,9 @@ val presentationModule = module {
 }
 
 val deviceModule = module {
-    single<CategoryLocalSource> { MemoryCache() }
-    single<ProductLocalSource> {
-        object : ProductLocalSource {
-            override suspend fun getProducts(categoryId: Int): List<Product> {
-                return listOf(
-                    Product(1, categoryId, 1000.0, "name test", ""),
-                    Product(2, categoryId, 5000.0, "name test2", ""),
-                )
-            }
-
-            override suspend fun setProducts(categoryId: Int, products: List<Product>) {
-
-            }
-        }
-    }
+    val memCache = MemoryCache()
+    single<CategoryLocalSource> { memCache }
+    single<ProductLocalSource> { memCache }
 }
 
 val httpModule = module {
