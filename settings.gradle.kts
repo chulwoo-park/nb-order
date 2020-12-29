@@ -1,6 +1,7 @@
 include(
     ":app",
     ":ui",
+    ":device",
     ":common:test:presentation",
     ":features:category:domain",
     ":features:category:data",

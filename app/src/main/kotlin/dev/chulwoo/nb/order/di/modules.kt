@@ -1,5 +1,6 @@
 package dev.chulwoo.nb.order.di
 
+import dev.chulwoo.nb.order.device.MemoryCache
 import dev.chulwoo.nb.order.features.category.data.repository.CategoryRepositoryImpl
 import dev.chulwoo.nb.order.features.category.data.source.CategoryLocalSource
 import dev.chulwoo.nb.order.features.category.data.source.CategoryRemoteSource
@@ -22,15 +23,10 @@ val presentationModule = module {
     single { CategoryViewModel(get(), Dispatchers.IO) }
 }
 
+val deviceModule = module {
+    single<CategoryLocalSource> { MemoryCache() }
+}
 val tmpModule = module {
-    single<CategoryLocalSource> {
-        object : CategoryLocalSource {
-            override suspend fun get(): List<Category> {
-                return listOf(Category(0, "local0"), Category(1, "local1"), Category(2, "local2"))
-            }
-        }
-    }
-
     single<CategoryRemoteSource> {
         object : CategoryRemoteSource {
             override suspend fun get(): List<Category> {
