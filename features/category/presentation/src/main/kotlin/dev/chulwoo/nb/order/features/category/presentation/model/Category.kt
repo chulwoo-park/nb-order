@@ -1,6 +1,6 @@
 package dev.chulwoo.nb.order.features.category.presentation.model
 
-class Category(val id: Int, var isSelected: Boolean = false) {
+data class Category(val id: Int, val isSelected: Boolean = false) {
 
     override fun hashCode(): Int {
         return 31 + id.hashCode()
