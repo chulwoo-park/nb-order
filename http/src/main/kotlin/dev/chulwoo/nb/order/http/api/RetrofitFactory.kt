@@ -8,6 +8,8 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 
 object RetrofitFactory {
 
+    fun create(baseUrl: String): Retrofit = create(HttpUrl.get(baseUrl))
+
     fun create(baseUrl: HttpUrl): Retrofit {
         val client = OkHttpClient.Builder()
             .addInterceptor(
@@ -16,6 +18,7 @@ object RetrofitFactory {
                     level = HttpLoggingInterceptor.Level.BODY
                 }
             ).build()
+
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(MoshiConverterFactory.create())

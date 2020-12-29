@@ -5,9 +5,10 @@ import dev.chulwoo.nb.order.features.category.data.repository.CategoryRepository
 import dev.chulwoo.nb.order.features.category.data.source.CategoryLocalSource
 import dev.chulwoo.nb.order.features.category.data.source.CategoryRemoteSource
 import dev.chulwoo.nb.order.features.category.presentation.viewmodel.CategoryViewModel
-import dev.chulwoo.nb.order.features.domain.model.Category
 import dev.chulwoo.nb.order.features.domain.repository.CategoryRepository
 import dev.chulwoo.nb.order.features.domain.usecase.GetCategories
+import dev.chulwoo.nb.order.http.api.OrderApi
+import dev.chulwoo.nb.order.http.api.RetrofitFactory
 import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 
@@ -26,16 +27,11 @@ val presentationModule = module {
 val deviceModule = module {
     single<CategoryLocalSource> { MemoryCache() }
 }
-val tmpModule = module {
+
+val httpModule = module {
     single<CategoryRemoteSource> {
-        object : CategoryRemoteSource {
-            override suspend fun get(): List<Category> {
-                return listOf(
-                    Category(0, "remote0"),
-                    Category(1, "remote1"),
-                    Category(2, "remote2")
-                )
-            }
-        }
+        OrderApi(
+            RetrofitFactory.create("https://nowwaiting-dev-aeb2b.web.app/")
+        )
     }
 }
