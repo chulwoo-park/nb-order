@@ -42,8 +42,30 @@ class CategoryViewModel(
     }
 
     fun selectBefore() {
+        val selectedIndex = findSelectedIndex()
+        val previousIndex = selectedIndex - 1
+        if (previousIndex >= 0) {
+            select(previousIndex)
+        }
     }
 
     fun selectNext() {
+        val selectedIndex = findSelectedIndex()
+        if (selectedIndex == -1) return
+
+        val currentState = states.value
+        val nextIndex = selectedIndex + 1
+        if (nextIndex < (currentState as CategoryState.Success).data.size) {
+            select(nextIndex)
+        }
+    }
+
+    /**
+     * 찾을 수 없거나 현재 상태가 [CategoryState.Success]가 아닌 경우, -1 리턴
+     */
+    private fun findSelectedIndex(): Int {
+        val currentState = _states.value
+        if (currentState !is CategoryState.Success) return -1
+        return currentState.data.indexOfFirst { it.isSelected }
     }
 }
