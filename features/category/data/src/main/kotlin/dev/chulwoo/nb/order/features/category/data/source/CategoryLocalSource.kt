@@ -5,5 +5,5 @@ import dev.chulwoo.nb.order.features.domain.model.Category
 interface CategoryLocalSource {
     suspend fun get(): List<Category>
 
-    fun set(listOf: List<Category>)
+    suspend fun set(categories: List<Category>)
 }

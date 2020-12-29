@@ -13,7 +13,14 @@ class CategoryRepositoryImpl(
         return try {
             localSource.get()
         } catch (e: Exception) {
-            remoteSource.get()
+            val result = remoteSource.get()
+            try {
+                localSource.set(result)
+            } catch (ignore: Exception) {
+                // ignore local save error
+            }
+
+            result
         }
     }
 }
