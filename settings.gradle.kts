@@ -4,8 +4,8 @@ include(
     ":device",
     ":http",
     ":common:test:presentation",
-    ":features:category:domain",
-    ":features:category:data",
-    ":features:category:presentation"
+    ":features:product:domain",
+    ":features:product:data",
+    ":features:product:presentation"
 )
 rootProject.name = "Order Application"

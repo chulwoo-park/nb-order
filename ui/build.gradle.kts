@@ -11,7 +11,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":features:category:presentation"))
+    implementation(project(":features:product:presentation"))
     implementation(Dependencies.Koin.viewmodel)
     implementation(Dependencies.AndroidX.appcompat)
     implementation(Dependencies.AndroidX.constraintLayout)

@@ -1,7 +1,7 @@
 package dev.chulwoo.nb.order.http.api
 
 import dev.chulwoo.nb.order.features.category.data.source.CategoryRemoteSource
-import dev.chulwoo.nb.order.features.domain.model.Category
+import dev.chulwoo.nb.order.features.product.domain.model.Category
 import dev.chulwoo.nb.order.http.service.CategoryService
 import retrofit2.Retrofit
 

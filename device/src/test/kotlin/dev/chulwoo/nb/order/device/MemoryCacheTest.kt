@@ -1,6 +1,6 @@
 package dev.chulwoo.nb.order.device
 
-import dev.chulwoo.nb.order.features.domain.model.Category
+import dev.chulwoo.nb.order.features.product.domain.model.Category
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat

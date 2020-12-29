@@ -1,6 +1,6 @@
 package dev.chulwoo.nb.order.http
 
-import dev.chulwoo.nb.order.features.domain.model.Category
+import dev.chulwoo.nb.order.features.product.domain.model.Category
 import dev.chulwoo.nb.order.http.api.OrderApi
 import dev.chulwoo.nb.order.http.api.RetrofitFactory
 import kotlinx.coroutines.runBlocking

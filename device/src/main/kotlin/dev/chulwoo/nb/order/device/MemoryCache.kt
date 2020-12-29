@@ -1,7 +1,7 @@
 package dev.chulwoo.nb.order.device
 
 import dev.chulwoo.nb.order.features.category.data.source.CategoryLocalSource
-import dev.chulwoo.nb.order.features.domain.model.Category
+import dev.chulwoo.nb.order.features.product.domain.model.Category
 
 /**
  * 앱 재실행 시 원격 데이터가 변경됐다면 바로 반영되어야하므로 별도의 DB, 파일을 사용하지 않고 메모리 캐시만 사용.

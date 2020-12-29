@@ -2,6 +2,6 @@ plugins {
     `module-base`
 }
 
-dependencies{
-    implementation(project(":features:category:data"))
+dependencies {
+    implementation(project(":features:product:data"))
 }

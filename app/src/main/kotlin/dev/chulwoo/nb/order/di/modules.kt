@@ -5,8 +5,8 @@ import dev.chulwoo.nb.order.features.category.data.repository.CategoryRepository
 import dev.chulwoo.nb.order.features.category.data.source.CategoryLocalSource
 import dev.chulwoo.nb.order.features.category.data.source.CategoryRemoteSource
 import dev.chulwoo.nb.order.features.category.presentation.viewmodel.CategoryViewModel
-import dev.chulwoo.nb.order.features.domain.repository.CategoryRepository
-import dev.chulwoo.nb.order.features.domain.usecase.GetCategories
+import dev.chulwoo.nb.order.features.product.domain.repository.CategoryRepository
+import dev.chulwoo.nb.order.features.product.domain.usecase.GetCategories
 import dev.chulwoo.nb.order.http.api.OrderApi
 import dev.chulwoo.nb.order.http.api.RetrofitFactory
 import kotlinx.coroutines.Dispatchers
