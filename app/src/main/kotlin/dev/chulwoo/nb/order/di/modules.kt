@@ -9,7 +9,6 @@ import dev.chulwoo.nb.order.features.category.data.source.ProductLocalSource
 import dev.chulwoo.nb.order.features.category.data.source.ProductRemoteSource
 import dev.chulwoo.nb.order.features.category.presentation.viewmodel.CategoryViewModel
 import dev.chulwoo.nb.order.features.category.presentation.viewmodel.ProductViewModel
-import dev.chulwoo.nb.order.features.product.domain.model.Product
 import dev.chulwoo.nb.order.features.product.domain.repository.CategoryRepository
 import dev.chulwoo.nb.order.features.product.domain.repository.ProductRepository
 import dev.chulwoo.nb.order.features.product.domain.usecase.GetCategories
@@ -41,19 +40,9 @@ val deviceModule = module {
 }
 
 val httpModule = module {
-    single<CategoryRemoteSource> {
-        OrderApi(
-            RetrofitFactory.create("https://nowwaiting-dev-aeb2b.web.app/")
-        )
-    }
-    single<ProductRemoteSource> {
-        object : ProductRemoteSource {
-            override suspend fun getProducts(): List<Product> {
-                return listOf(
-                    Product(1, 1, 1000.0, "a", ""),
-                    Product(2, 1, 5000.0, "b", ""),
-                )
-            }
-        }
-    }
+    val orderApi = OrderApi(
+        RetrofitFactory.create("https://nowwaiting-dev-aeb2b.web.app/")
+    )
+    single<CategoryRemoteSource> { orderApi }
+    single<ProductRemoteSource> { orderApi }
 }
