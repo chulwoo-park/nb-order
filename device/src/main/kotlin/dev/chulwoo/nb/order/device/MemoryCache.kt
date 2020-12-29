@@ -13,11 +13,15 @@ import dev.chulwoo.nb.order.features.domain.model.Category
  */
 class MemoryCache : CategoryLocalSource {
 
+    var categories: List<Category>? = null
+
     override suspend fun get(): List<Category> {
-        TODO("Not yet implemented")
+        if (categories == null) throw CacheMissException()
+
+        return categories!!
     }
 
     override suspend fun set(categories: List<Category>) {
-        TODO("Not yet implemented")
+        this.categories = categories
     }
 }
