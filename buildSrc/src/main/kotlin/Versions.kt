@@ -4,6 +4,7 @@ object Versions {
 
     const val koin = "2.2.2"
     const val retrofit = "2.9.0"
+    const val okhttp3 = "3.14.9" // retrofit 2.9.0 okhttp 버전과 통일
 
     object AndroidX {
         const val core = "1.3.2"

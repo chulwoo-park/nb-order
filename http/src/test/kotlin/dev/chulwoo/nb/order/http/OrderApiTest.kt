@@ -2,6 +2,7 @@ package dev.chulwoo.nb.order.http
 
 import dev.chulwoo.nb.order.features.domain.model.Category
 import dev.chulwoo.nb.order.http.api.OrderApi
+import dev.chulwoo.nb.order.http.api.RetrofitFactory
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -10,7 +11,6 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import retrofit2.Retrofit
 
 class OrderApiTest {
 
@@ -22,10 +22,7 @@ class OrderApiTest {
         server = MockWebServer()
         server.start()
 
-        val retrofit = Retrofit.Builder()
-            .baseUrl(server.url("/"))
-            .build()
-
+        val retrofit = RetrofitFactory.create(server.url("/"))
         orderApi = OrderApi(retrofit)
     }
 

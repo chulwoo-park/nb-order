@@ -6,6 +6,6 @@ import retrofit2.http.GET
 
 interface CategoryService {
 
-    @GET("/json/categories.json")
+    @GET("json/categories.json")
     suspend fun getCategories(): List<CategoryDto>
 }
