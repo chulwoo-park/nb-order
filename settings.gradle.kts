@@ -1,2 +1,8 @@
-include(":app", ":features:category:domain", ":features:category:data")
+include(
+    ":app",
+    ":common:test:presentation",
+    ":features:category:domain",
+    ":features:category:data",
+    ":features:category:presentation"
+)
 rootProject.name = "Order Application"

@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
+    id("kotlin-android")
 }
 
 android {
@@ -27,14 +28,25 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    sourceSets {
+        getByName("androidTest").java.srcDir("src/androidTest/kotlin")
+        getByName("main").java.srcDir("src/main/kotlin")
+        getByName("test").java.srcDir("src/test/kotlin")
     }
 }
 
 dependencies {
 
-    implementation(Dependencies.kotlin)
+    implementation(Dependencies.Kotlin.stdlib)
     implementation(Dependencies.AndroidX.coreKtx)
     implementation(Dependencies.AndroidX.appcompat)
     implementation(Dependencies.Google.material)

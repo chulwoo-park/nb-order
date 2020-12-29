@@ -41,11 +41,16 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    packagingOptions {
+        exclude("META-INF/AL2.0")
+        exclude("META-INF/LGPL2.1")
+    }
 }
 
 dependencies {
 
-    implementation(Dependencies.kotlin)
+    implementation(Dependencies.Kotlin.stdlib)
+    implementation(Dependencies.Kotlin.coroutine)
     testImplementation(Dependencies.Test.junit)
     testImplementation(Dependencies.Test.Mockito.kotlin)
     testImplementation(Dependencies.Test.coroutine)
