@@ -38,14 +38,14 @@ val deviceModule = module {
     single<CategoryLocalSource> { MemoryCache() }
     single<ProductLocalSource> {
         object : ProductLocalSource {
-            override suspend fun get(categoryId: Int): List<Product> {
+            override suspend fun getProducts(categoryId: Int): List<Product> {
                 return listOf(
                     Product(1, categoryId, 1000.0, "name test", ""),
                     Product(2, categoryId, 5000.0, "name test2", ""),
                 )
             }
 
-            override suspend fun set(categoryId: Int, products: List<Product>) {
+            override suspend fun setProducts(categoryId: Int, products: List<Product>) {
 
             }
         }
@@ -60,7 +60,7 @@ val httpModule = module {
     }
     single<ProductRemoteSource> {
         object : ProductRemoteSource {
-            override suspend fun get(): List<Product> {
+            override suspend fun getProducts(): List<Product> {
                 return listOf(
                     Product(1, 1, 1000.0, "a", ""),
                     Product(2, 1, 5000.0, "b", ""),

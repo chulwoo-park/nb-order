@@ -15,13 +15,13 @@ class MemoryCache : CategoryLocalSource {
 
     var categories: List<Category>? = null
 
-    override suspend fun get(): List<Category> {
+    override suspend fun getCategories(): List<Category> {
         if (categories == null) throw CacheMissException()
 
         return categories!!
     }
 
-    override suspend fun set(categories: List<Category>) {
+    override suspend fun setCategories(categories: List<Category>) {
         this.categories = categories
     }
 }

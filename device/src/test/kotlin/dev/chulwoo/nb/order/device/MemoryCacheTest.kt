@@ -20,14 +20,14 @@ class MemoryCacheTest {
 
     @Test
     fun testGetWithoutData() {
-        assertThrows(CacheMissException::class.java) { runBlocking { cache.get() } }
+        assertThrows(CacheMissException::class.java) { runBlocking { cache.getCategories() } }
     }
 
     @Test
     fun testSet() {
         runBlocking {
-            cache.set(listOf(Category(1, "1")))
-            assertThat(cache.get(), equalTo(listOf(Category(1, "1"))))
+            cache.setCategories(listOf(Category(1, "1")))
+            assertThat(cache.getCategories(), equalTo(listOf(Category(1, "1"))))
         }
     }
 }

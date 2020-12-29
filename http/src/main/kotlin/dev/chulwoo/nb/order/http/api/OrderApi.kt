@@ -9,7 +9,7 @@ class OrderApi(retrofit: Retrofit) : CategoryRemoteSource {
 
     private val categoryService: CategoryService = retrofit.create(CategoryService::class.java)
 
-    override suspend fun get(): List<Category> {
+    override suspend fun getCategories(): List<Category> {
         return categoryService.getCategories().map { Category(it.id, it.name) }
     }
 }

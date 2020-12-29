@@ -11,11 +11,11 @@ class CategoryRepositoryImpl(
 ) : CategoryRepository {
     override suspend fun get(): List<Category> {
         return try {
-            localSource.get()
+            localSource.getCategories()
         } catch (e: Exception) {
-            val result = remoteSource.get()
+            val result = remoteSource.getCategories()
             try {
-                localSource.set(result)
+                localSource.setCategories(result)
             } catch (ignore: Exception) {
                 // ignore local save error
             }

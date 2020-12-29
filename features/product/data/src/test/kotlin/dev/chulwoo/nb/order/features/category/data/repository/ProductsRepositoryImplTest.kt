@@ -19,14 +19,14 @@ class ProductsRepositoryImplTest {
     fun `Given local data When invoke get Then use local data only`() {
         runBlocking {
             val localSource = mock<ProductLocalSource> {
-                onBlocking { get(1) } doAnswer { listOf(p1, p2, p3) }
+                onBlocking { getProducts(1) } doAnswer { listOf(p1, p2, p3) }
             }
             val remoteSource = mock<ProductRemoteSource>()
             val repository = ProductRepositoryImpl(localSource, remoteSource)
 
             repository.get(1)
-            verify(localSource).get(1)
-            verify(remoteSource, never()).get()
+            verify(localSource).getProducts(1)
+            verify(remoteSource, never()).getProducts()
         }
     }
 
@@ -34,17 +34,17 @@ class ProductsRepositoryImplTest {
     fun `Given local error When invoke get Then use remote data`() {
         runBlocking {
             val localSource = mock<ProductLocalSource> {
-                onBlocking { get(1) } doAnswer { throw Exception() }
-                onBlocking { set(any(), any()) } doAnswer {}
+                onBlocking { getProducts(1) } doAnswer { throw Exception() }
+                onBlocking { setProducts(any(), any()) } doAnswer {}
             }
             val remoteSource = mock<ProductRemoteSource> {
-                onBlocking { get() } doAnswer { listOf(p1, p2, p3) }
+                onBlocking { getProducts() } doAnswer { listOf(p1, p2, p3) }
             }
             val repository = ProductRepositoryImpl(localSource, remoteSource)
 
             val result = repository.get(1)
-            verify(localSource).get(1)
-            verify(remoteSource).get()
+            verify(localSource).getProducts(1)
+            verify(remoteSource).getProducts()
             assertThat(result, equalTo(listOf(p1, p2)))
 
         }
@@ -54,18 +54,18 @@ class ProductsRepositoryImplTest {
     fun `Given local error When invoke get Then save data from remote to local`() {
         runBlocking {
             val localSource = mock<ProductLocalSource> {
-                onBlocking { get(1) } doAnswer { throw Exception() }
+                onBlocking { getProducts(1) } doAnswer { throw Exception() }
             }
             val remoteSource = mock<ProductRemoteSource> {
-                onBlocking { get() } doAnswer { listOf(p1, p2, p3) }
+                onBlocking { getProducts() } doAnswer { listOf(p1, p2, p3) }
             }
             val repository = ProductRepositoryImpl(localSource, remoteSource)
 
             repository.get(1)
-            verify(localSource).get(1)
-            verify(remoteSource).get()
-            verify(localSource).set(1, listOf(p1, p2))
-            verify(localSource).set(2, listOf(p3))
+            verify(localSource).getProducts(1)
+            verify(remoteSource).getProducts()
+            verify(localSource).setProducts(1, listOf(p1, p2))
+            verify(localSource).setProducts(2, listOf(p3))
         }
     }
 
@@ -73,17 +73,17 @@ class ProductsRepositoryImplTest {
     fun `Given save error When invoke get Then use remote data without error`() {
         runBlocking {
             val localSource = mock<ProductLocalSource> {
-                onBlocking { get(1) } doAnswer { throw Exception() }
-                onBlocking { set(any(), any()) } doAnswer { throw Exception() }
+                onBlocking { getProducts(1) } doAnswer { throw Exception() }
+                onBlocking { setProducts(any(), any()) } doAnswer { throw Exception() }
             }
             val remoteSource = mock<ProductRemoteSource> {
-                onBlocking { get() } doAnswer { listOf(p1, p2, p3) }
+                onBlocking { getProducts() } doAnswer { listOf(p1, p2, p3) }
             }
             val repository = ProductRepositoryImpl(localSource, remoteSource)
 
             val result = repository.get(1)
-            verify(localSource).get(1)
-            verify(remoteSource).get()
+            verify(localSource).getProducts(1)
+            verify(remoteSource).getProducts()
             assertThat(result, equalTo(listOf(p1, p2)))
         }
     }
@@ -92,16 +92,16 @@ class ProductsRepositoryImplTest {
     fun `Given local error and remote error When invoke get Then throw error`() {
         runBlocking {
             val localSource = mock<ProductLocalSource> {
-                onBlocking { get(1) } doAnswer { throw Exception() }
+                onBlocking { getProducts(1) } doAnswer { throw Exception() }
             }
             val remoteSource = mock<ProductRemoteSource> {
-                onBlocking { get() } doAnswer { throw Exception() }
+                onBlocking { getProducts() } doAnswer { throw Exception() }
             }
             val repository = ProductRepositoryImpl(localSource, remoteSource)
 
             assertThrows(Exception::class.java) { runBlocking { repository.get(1) } }
-            verify(localSource).get(1)
-            verify(remoteSource).get()
+            verify(localSource).getProducts(1)
+            verify(remoteSource).getProducts()
         }
     }
 }

@@ -15,12 +15,12 @@ class ProductRepositoryImpl(
 
     override suspend fun get(categoryId: Int): List<Product> {
         return try {
-            localSource.get(categoryId)
+            localSource.getProducts(categoryId)
         } catch (e: Exception) {
-            val result = remoteSource.get().groupBy { it.categoryId }.toMap()
+            val result = remoteSource.getProducts().groupBy { it.categoryId }.toMap()
             try {
                 coroutineScope {
-                    result.map { async { localSource.set(it.key, it.value) } }.awaitAll()
+                    result.map { async { localSource.setProducts(it.key, it.value) } }.awaitAll()
                 }
             } catch (ignore: Exception) {
                 // ignore local save error

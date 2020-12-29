@@ -36,7 +36,7 @@ class OrderApiTest {
         server.enqueue(MockResponse().setBody("[{\"id\": 100,\"name\": \"커피\"},{\"id\": 101,\"name\": \"라떼\"},{\"id\": 102,\"name\": \"베이커리\"},{\"id\": 103,\"name\": \"기타\"}]"))
         runBlocking {
             assertThat(
-                orderApi.get(),
+                orderApi.getCategories(),
                 equalTo(
                     listOf(
                         Category(100, "커피"),
