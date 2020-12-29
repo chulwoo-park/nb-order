@@ -32,7 +32,7 @@ class CategoryAdapter(
         if (payloads.isNotEmpty()) {
             val fragment = fragment.childFragmentManager.findFragmentByTag("f${holder.itemId}")
             if (fragment != null) {
-                (fragment as CategoryProductFragment).updateCategory(_items[position])
+                (fragment as CategoryProductFragment).updateCategory(_items[position].id)
             } else {
                 super.onBindViewHolder(holder, position, payloads)
             }
@@ -43,7 +43,8 @@ class CategoryAdapter(
 
     override fun getItemCount(): Int = _items.size
 
-    override fun createFragment(position: Int): Fragment = CategoryProductFragment.newInstance()
+    override fun createFragment(position: Int): Fragment =
+        CategoryProductFragment.newInstance(_items[position].id)
 
     override fun getItemId(position: Int): Long = _items[position].id.toLong()
 

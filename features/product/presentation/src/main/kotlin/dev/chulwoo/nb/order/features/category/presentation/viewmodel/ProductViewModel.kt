@@ -19,8 +19,11 @@ class ProductViewModel(
     private val _states: MutableStateFlow<ProductState> = MutableStateFlow(ProductState.Initial)
     val states: StateFlow<ProductState> = _states
 
+    private var categoryId: Int = -1
+
     fun load(categoryId: Int) {
         if (_states.value is ProductState.Loading) return
+        this.categoryId = categoryId
 
         viewModelScope.launch(dispatcher) {
             _states.value = ProductState.Loading
@@ -32,5 +35,9 @@ class ProductViewModel(
                 ProductState.Failure(e)
             }
         }
+    }
+
+    fun reload() {
+        if (categoryId >= 0) load(categoryId)
     }
 }

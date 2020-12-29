@@ -68,8 +68,10 @@ class ProductFragment : Fragment() {
                 }
                 CategoryState.Loading -> {
                     error.root.isVisible = false
+                    loadingIndicator.show()
                 }
                 is CategoryState.Success -> {
+                    loadingIndicator.hide()
                     error.root.isVisible = false
 
                     val categories = state.data
@@ -84,6 +86,7 @@ class ProductFragment : Fragment() {
                     }
                 }
                 is CategoryState.Failure -> {
+                    loadingIndicator.hide()
                     error.root.isVisible = true
                 }
             }

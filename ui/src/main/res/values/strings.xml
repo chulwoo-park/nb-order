@@ -1,5 +1,7 @@
 <resources>
 
     <string name="error_message">문제가 발생했습니다.\n다시 시도해주세요</string>
+    <string name="product_empty_message">아직 상품이 없습니다.</string>
     <string name="retry">재시도</string>
+    <string name="price_format">%,.0f원</string>
 </resources>

@@ -43,6 +43,10 @@ android {
         getByName("main").java.srcDir("src/main/kotlin")
         getByName("test").java.srcDir("src/test/kotlin")
     }
+
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 dependencies {

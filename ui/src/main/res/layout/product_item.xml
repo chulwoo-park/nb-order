@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+        <variable
+            name="product"
+            type="dev.chulwoo.nb.order.features.category.presentation.model.Product" />
+    </data>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        tools:context=".order.ProductFragment">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="100dp"
+            android:layout_margin="5dp"
+            android:layout_height="100dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:contentDescription="@{product.name}"
+                app:imageUrl="@{product.imageUrl}"
+                tools:src="@drawable/ic_navigate_before_24px" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="@{product.name}"
+            tools:text="콜드브루 화이트 비엔나나" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:text="@{@string/price_format(product.price)}"
+            android:textColor="@color/red_500"
+            tools:text="4,500원" />
+    </LinearLayout>
+
+</layout>

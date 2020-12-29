@@ -1,6 +1,7 @@
 plugins {
     `module-base`
     `presentation-module-base`
+    kotlin("kapt")
 }
 
 android {
@@ -18,4 +19,6 @@ dependencies {
     implementation(Dependencies.AndroidX.activity)
     implementation(Dependencies.AndroidX.fragment)
     implementation(Dependencies.Google.material)
+    implementation(Dependencies.Glide.glide)
+    annotationProcessor(Dependencies.Glide.compiler)
 }

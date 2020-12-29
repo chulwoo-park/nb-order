@@ -38,6 +38,11 @@ object Dependencies {
         const val logging = "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp3}"
     }
 
+    object Glide {
+        const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
+        const val compiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
+    }
+
     object Test {
         const val junit = "junit:junit:${Versions.Test.junit}"
 
