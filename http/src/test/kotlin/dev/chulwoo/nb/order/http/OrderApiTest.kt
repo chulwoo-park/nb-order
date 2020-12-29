@@ -61,14 +61,12 @@ class OrderApiTest {
             assertThat(
                 orderApi.getProducts().first(),
                 equalTo(
-                    listOf(
-                        Product(
-                            200,
-                            100,
-                            2500.0,
-                            "아이스 아메리카노",
-                            "https://nowwaiting-dev-aeb2b.web.app/image/ice_americano.png"
-                        ),
+                    Product(
+                        200,
+                        100,
+                        2500.0,
+                        "아이스 아메리카노",
+                        "https://nowwaiting-dev-aeb2b.web.app/image/ice_americano.png"
                     )
                 )
             )
