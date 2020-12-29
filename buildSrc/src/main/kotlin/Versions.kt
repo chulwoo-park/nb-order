@@ -3,6 +3,7 @@ object Versions {
     const val kotlinx = "1.4.2"
 
     const val koin = "2.2.2"
+    const val retrofit = "2.9.0"
 
     object AndroidX {
         const val core = "1.3.2"

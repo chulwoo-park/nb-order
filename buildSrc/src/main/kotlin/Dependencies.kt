@@ -29,6 +29,10 @@ object Dependencies {
         const val material = "com.google.android.material:material:${Versions.Google.material}"
     }
 
+    object Retrofit {
+        const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
+    }
+
     object Test {
         const val junit = "junit:junit:${Versions.Test.junit}"
 
@@ -38,6 +42,9 @@ object Dependencies {
         }
 
         const val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2"
+
+        const val retrofit = "com.squareup.retrofit2:retrofit-mock:${Versions.retrofit}"
+        const val mockwebserver = "com.squareup.okhttp3:mockwebserver:3.14.9" // retrofit 2.9.0 okhttp 버전과 통일
     }
 
     object AndroidTest {
