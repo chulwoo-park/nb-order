@@ -6,7 +6,8 @@ plugins {
 dependencies {
     implementation(Dependencies.Kotlin.coroutineAndroid)
     implementation(Dependencies.AndroidX.viewmodel)
-    implementation(Dependencies.AndroidX.livedataKtx)
+    implementation(Dependencies.AndroidX.livedata)
+
     androidTestImplementation(project(":common:test:presentation"))
     androidTestImplementation(Dependencies.Test.coroutine)
     androidTestImplementation(Dependencies.Test.Mockito.kotlin)

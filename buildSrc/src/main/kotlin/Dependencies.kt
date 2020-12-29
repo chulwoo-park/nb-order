@@ -6,13 +6,23 @@ object Dependencies {
             "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.kotlinx}"
     }
 
+    object Koin {
+        const val android = "org.koin:koin-android:${Versions.koin}"
+        const val scope = "org.koin:koin-androidx-scope:${Versions.koin}"
+        const val viewmodel = "org.koin:koin-androidx-viewmodel:${Versions.koin}"
+        const val fragment = "org.koin:koin-androidx-fragment:${Versions.koin}"
+    }
+
     object AndroidX {
-        const val coreKtx = "androidx.core:core-ktx:${Versions.AndroidX.core}"
         const val appcompat = "androidx.appcompat:appcompat:${Versions.AndroidX.appcompat}"
+        const val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
+
         const val viewmodel =
             "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.AndroidX.lifecycle}"
-        const val livedataKtx =
+        const val livedata =
             "androidx.lifecycle:lifecycle-livedata-ktx:${Versions.AndroidX.lifecycle}"
+        const val activity = "androidx.activity:activity-ktx:${Versions.AndroidX.activity}"
+        const val fragment = "androidx.fragment:fragment-ktx:${Versions.AndroidX.fragment}"
     }
 
     object Google {
@@ -34,5 +44,6 @@ object Dependencies {
         const val core = "androidx.arch.core:core-testing:2.1.0"
         const val junit = "androidx.test.ext:junit:${Versions.AndroidTest.junit}"
         const val espresso = "androidx.test.espresso:espresso-core:${Versions.AndroidTest.espresso}"
+        const val fragment = "androidx.fragment:fragment-testing:${Versions.AndroidX.fragment}"
     }
 }

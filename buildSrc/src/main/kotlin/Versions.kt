@@ -2,10 +2,15 @@ object Versions {
     const val kotlin = "1.4.21"
     const val kotlinx = "1.4.2"
 
+    const val koin = "2.2.2"
+
     object AndroidX {
         const val core = "1.3.2"
         const val appcompat = "1.2.0"
         const val lifecycle = "2.2.0"
+
+        const val activity = "1.1.0"
+        const val fragment = "1.2.5"
     }
 
     object Google {

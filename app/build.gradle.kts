@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("kotlin-android")
+    id("koin")
 }
 
 android {
@@ -45,12 +46,11 @@ android {
 }
 
 dependencies {
-
+    implementation(project(":ui"))
+    implementation(project(":features:category:domain"))
+    implementation(project(":features:category:data"))
+    implementation(project(":features:category:presentation"))
     implementation(Dependencies.Kotlin.stdlib)
-    implementation(Dependencies.AndroidX.coreKtx)
-    implementation(Dependencies.AndroidX.appcompat)
-    implementation(Dependencies.Google.material)
-    testImplementation(Dependencies.Test.junit)
-    androidTestImplementation(Dependencies.AndroidTest.junit)
-    androidTestImplementation(Dependencies.AndroidTest.espresso)
+    implementation(Dependencies.Koin.android)
+    implementation(Dependencies.Koin.viewmodel)
 }
