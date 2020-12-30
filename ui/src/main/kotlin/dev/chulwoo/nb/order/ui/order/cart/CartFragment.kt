@@ -45,7 +45,7 @@ class CartFragment : Fragment() {
         cartItemAdapter = CartItemAdapter(
             onProductAdded = { cartViewModel.add(it) },
             onProductRemoved = { cartViewModel.remove(it) },
-            onProductCleared = { /* TODO */ }
+            onProductCleared = { cartViewModel.delete(it) }
         )
         binding.recyclerView.adapter = cartItemAdapter
         binding.recyclerView.itemAnimator = null

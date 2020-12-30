@@ -5,10 +5,7 @@ import dev.chulwoo.nb.order.device.MemoryCache
 import dev.chulwoo.nb.order.features.cart.data.repository.CartRepositoryImpl
 import dev.chulwoo.nb.order.features.cart.data.source.CartLocalSource
 import dev.chulwoo.nb.order.features.cart.domain.repository.CartRepository
-import dev.chulwoo.nb.order.features.cart.domain.usecase.AddToCart
-import dev.chulwoo.nb.order.features.cart.domain.usecase.ClearCart
-import dev.chulwoo.nb.order.features.cart.domain.usecase.GetCart
-import dev.chulwoo.nb.order.features.cart.domain.usecase.RemoveFromCart
+import dev.chulwoo.nb.order.features.cart.domain.usecase.*
 import dev.chulwoo.nb.order.features.cart.presentation.viewmodel.CartViewModel
 import dev.chulwoo.nb.order.features.category.data.repository.CategoryRepositoryImpl
 import dev.chulwoo.nb.order.features.category.data.repository.ProductRepositoryImpl
@@ -33,6 +30,7 @@ val domainModule = module {
     factory { GetCart(get()) }
     factory { AddToCart(get()) }
     factory { RemoveFromCart(get()) }
+    factory { DeleteFromCart(get()) }
     factory { ClearCart(get()) }
 }
 
@@ -50,6 +48,7 @@ val presentationModule = module {
             getCart = get(),
             addToCart = get(),
             removeFromCart = get(),
+            deleteFromCart = get(),
             clearCart = get(),
             Dispatchers.IO
         )
