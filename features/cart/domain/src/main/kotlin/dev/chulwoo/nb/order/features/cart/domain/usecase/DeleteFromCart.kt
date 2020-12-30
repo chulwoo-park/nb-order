@@ -9,6 +9,6 @@ data class DeleteFromCartParam(val product: Product)
 class DeleteFromCart(private val repository: CartRepository) {
 
     suspend operator fun invoke(param: DeleteFromCartParam): Cart {
-        TODO()
+        return repository.delete(param.product)
     }
 }
