@@ -1,11 +1,19 @@
 package dev.chulwoo.nb.order.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import dev.chulwoo.nb.order.ui.databinding.MainActivityBinding
 import dev.chulwoo.nb.order.ui.order.ProductFragment
 
 class MainActivity : AppCompatActivity() {
+
+    companion object {
+        fun createIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java)
+        }
+    }
 
     private var _binding: MainActivityBinding? = null
     val binding: MainActivityBinding get() = _binding!!
