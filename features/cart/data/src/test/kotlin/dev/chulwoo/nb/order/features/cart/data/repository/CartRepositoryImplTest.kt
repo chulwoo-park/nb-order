@@ -90,6 +90,30 @@ class CartRepositoryImplTest {
     }
 
     @Test
+    fun `Given local data When invoke delete Then returns updated data from local`() {
+        runBlocking {
+            val localSource = mock<CartLocalSource> {
+                onBlocking { delete(any()) } doAnswer { cart }
+            }
+            val repository = CartRepositoryImpl(localSource)
+
+            val result = repository.delete(product)
+            verify(localSource).delete(product)
+            assertThat(result, equalTo(cart))
+        }
+    }
+
+    @Test
+    fun `Given local error When invoke delete Then throws error`() {
+        val localSource = mock<CartLocalSource> {
+            onBlocking { delete(any()) } doAnswer { throw Exception() }
+        }
+        val repository = CartRepositoryImpl(localSource)
+
+        assertThrows(Exception::class.java) { runBlocking { repository.delete(product) } }
+    }
+
+    @Test
     fun `Given local data When invoke clear Then returns updated data from local`() {
         runBlocking {
             val localSource = mock<CartLocalSource> {

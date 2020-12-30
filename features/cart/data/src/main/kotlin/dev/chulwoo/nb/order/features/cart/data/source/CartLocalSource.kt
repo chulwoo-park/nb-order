@@ -11,5 +11,7 @@ interface CartLocalSource {
 
     suspend fun remove(product: Product): Cart
 
+    suspend fun delete(product: Product): Cart
+
     suspend fun clear(): Cart
 }

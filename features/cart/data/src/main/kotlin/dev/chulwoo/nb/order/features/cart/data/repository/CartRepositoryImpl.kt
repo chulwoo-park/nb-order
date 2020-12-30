@@ -13,5 +13,9 @@ class CartRepositoryImpl(private val localSource: CartLocalSource) : CartReposit
 
     override suspend fun remove(product: Product): Cart = localSource.remove(product)
 
+    override suspend fun delete(product: Product): Cart {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun clear(): Cart = localSource.clear()
 }
