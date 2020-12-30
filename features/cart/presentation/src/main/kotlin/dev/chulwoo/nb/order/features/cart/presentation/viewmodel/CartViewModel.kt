@@ -18,6 +18,7 @@ class CartViewModel(
     private val getCart: GetCart,
     private val addToCart: AddToCart,
     private val removeFromCart: RemoveFromCart,
+    private val deleteFromCart: DeleteFromCart,
     private val clearCart: ClearCart,
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
@@ -64,6 +65,10 @@ class CartViewModel(
                 CartState.Failure(getDataFromPreviousState(), e)
             }
         }
+    }
+
+    fun delete(product: Product) {
+        TODO()
     }
 
     fun clear() {
