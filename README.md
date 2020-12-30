@@ -22,7 +22,6 @@
 * GetCart
 * AddToCart
 * RemoveFromCart
-* UpdateProductCountInCart
 * ClearCart
 
 # 뷰 모델
