@@ -4,6 +4,6 @@ plugins {
 }
 
 dependencies {
-    api(project(":features:product:domain"))
+    api(project(":features:product:presentation"))
     api(project(":features:cart:domain"))
 }

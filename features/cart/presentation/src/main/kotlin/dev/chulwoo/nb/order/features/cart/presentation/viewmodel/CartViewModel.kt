@@ -6,12 +6,13 @@ import dev.chulwoo.nb.order.features.cart.domain.usecase.*
 import dev.chulwoo.nb.order.features.cart.presentation.model.Cart
 import dev.chulwoo.nb.order.features.cart.presentation.model.CartItem
 import dev.chulwoo.nb.order.features.cart.presentation.state.CartState
-import dev.chulwoo.nb.order.features.product.domain.model.Product
+import dev.chulwoo.nb.order.features.category.presentation.model.Product
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import dev.chulwoo.nb.order.features.cart.domain.model.Cart as CartEntity
+import dev.chulwoo.nb.order.features.product.domain.model.Product as ProductEntity
 
 class CartViewModel(
     private val getCart: GetCart,
@@ -44,7 +45,7 @@ class CartViewModel(
 
         viewModelScope.launch(dispatcher) {
             _states.value = try {
-                val result = addToCart(AddToCartParam(product))
+                val result = addToCart(AddToCartParam(product.toEntity()))
                 CartState.Success(result.toPresentationModel())
             } catch (e: Exception) {
                 CartState.Failure(getDataFromPreviousState(), e)
@@ -57,7 +58,7 @@ class CartViewModel(
 
         viewModelScope.launch(dispatcher) {
             _states.value = try {
-                val result = removeFromCart(RemoveFromCartParam(product))
+                val result = removeFromCart(RemoveFromCartParam(product.toEntity()))
                 CartState.Success(result.toPresentationModel())
             } catch (e: Exception) {
                 CartState.Failure(getDataFromPreviousState(), e)
@@ -87,4 +88,9 @@ class CartViewModel(
     }
 }
 
-fun CartEntity.toPresentationModel(): Cart = Cart(products.map { CartItem(it.product, it.count) })
+fun CartEntity.toPresentationModel(): Cart =
+    Cart(products.map { CartItem(it.product.toPresentationModel(), it.count) })
+
+fun ProductEntity.toPresentationModel(): Product = Product(id, categoryId, price, name, imageUrl)
+
+fun Product.toEntity(): ProductEntity = ProductEntity(id, categoryId, price, name, imageUrl)

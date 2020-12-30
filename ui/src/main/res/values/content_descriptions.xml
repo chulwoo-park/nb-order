@@ -2,4 +2,8 @@
 
     <string name="desc_category_before">이전으로 이동</string>
     <string name="desc_category_next">다음으로 이동</string>
+
+    <string name="desc_remove_product">상품 수량 감소</string>
+    <string name="desc_add_product">상품 수량 증가</string>
+    <string name="desc_delete_product">상품 제거</string>
 </resources>

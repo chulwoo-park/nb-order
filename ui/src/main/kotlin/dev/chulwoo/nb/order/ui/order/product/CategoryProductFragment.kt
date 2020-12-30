@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
+import dev.chulwoo.nb.order.features.cart.presentation.viewmodel.CartViewModel
 import dev.chulwoo.nb.order.features.category.presentation.state.ProductState
 import dev.chulwoo.nb.order.features.category.presentation.viewmodel.ProductViewModel
 import dev.chulwoo.nb.order.ui.R
@@ -16,16 +17,20 @@ import dev.chulwoo.nb.order.ui.databinding.CategoryProductFragmentBinding
 import dev.chulwoo.nb.order.ui.util.HorizontalSpacingItemDecoration
 import dev.chulwoo.nb.order.ui.util.toDp
 import dev.chulwoo.nb.order.ui.util.toPx
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CategoryProductFragment : Fragment() {
 
+    private val cartViewModel: CartViewModel by sharedViewModel()
     private val productViewModel: ProductViewModel by viewModel()
 
     private var _binding: CategoryProductFragmentBinding? = null
     val binding: CategoryProductFragmentBinding get() = _binding!!
 
-    private val productAdapter: ProductAdapter = ProductAdapter()
+    private val productAdapter: ProductAdapter = ProductAdapter {
+        cartViewModel.add(it)
+    }
 
     companion object {
         fun newInstance(categoryId: Int): CategoryProductFragment {
@@ -98,6 +103,6 @@ class CategoryProductFragment : Fragment() {
     private fun calculateSpanCount(): Int {
         val displayMetrics = requireContext().resources.displayMetrics
         val width = displayMetrics.widthPixels / displayMetrics.density
-        return (width / resources.getDimensionPixelSize(R.dimen.product_width).toDp()).toInt()
+        return (width * 0.7 / resources.getDimensionPixelSize(R.dimen.product_width).toDp()).toInt()
     }
 }
