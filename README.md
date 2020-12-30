@@ -44,8 +44,11 @@
   * Success
   * Failure
 
-* CategoryViewModel
-  * 상태 없이 Cart 모델 flow 제공
+* CartViewModel
+  * Initial
+  * Loading
+  * Success
+  * Failure
 
 # Repository
 
@@ -56,5 +59,6 @@
 * ProductRepository
   * get
 * CartRepository
+  * get
   * add
   * remove
