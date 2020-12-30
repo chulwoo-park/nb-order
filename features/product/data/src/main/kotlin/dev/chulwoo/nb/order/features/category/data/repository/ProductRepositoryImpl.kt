@@ -17,8 +17,11 @@ class ProductRepositoryImpl(
         return try {
             localSource.getProducts(categoryId)
         } catch (e: Exception) {
-            val result = remoteSource.getProducts().groupBy { it.categoryId }.toMap()
+            val result = remoteSource.getProducts().groupBy { it.categoryId }.toMutableMap()
             try {
+                if (!result.containsKey(categoryId)) {
+                    result[categoryId] = listOf()
+                }
                 coroutineScope {
                     result.map { async { localSource.setProducts(it.key, it.value) } }.awaitAll()
                 }

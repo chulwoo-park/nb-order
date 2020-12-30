@@ -25,8 +25,10 @@ class ProductsRepositoryImplTest {
             val repository = ProductRepositoryImpl(localSource, remoteSource)
 
             repository.get(1)
-            verify(localSource).getProducts(1)
-            verify(remoteSource, never()).getProducts()
+            inOrder(localSource, remoteSource) {
+                verify(localSource).getProducts(1)
+                verify(remoteSource, never()).getProducts()
+            }
         }
     }
 
@@ -43,8 +45,10 @@ class ProductsRepositoryImplTest {
             val repository = ProductRepositoryImpl(localSource, remoteSource)
 
             val result = repository.get(1)
-            verify(localSource).getProducts(1)
-            verify(remoteSource).getProducts()
+            inOrder(localSource, remoteSource) {
+                verify(localSource).getProducts(1)
+                verify(remoteSource).getProducts()
+            }
             assertThat(result, equalTo(listOf(p1, p2)))
 
         }
@@ -62,10 +66,29 @@ class ProductsRepositoryImplTest {
             val repository = ProductRepositoryImpl(localSource, remoteSource)
 
             repository.get(1)
-            verify(localSource).getProducts(1)
-            verify(remoteSource).getProducts()
-            verify(localSource).setProducts(1, listOf(p1, p2))
+            inOrder(localSource, remoteSource) {
+                verify(localSource).getProducts(1)
+                verify(remoteSource).getProducts()
+                verify(localSource).setProducts(1, listOf(p1, p2))
+            }
             verify(localSource).setProducts(2, listOf(p3))
+        }
+    }
+
+    @Test
+    fun `Given empty data in category id When invoke get Then save empty list that category id`() {
+        runBlocking {
+            val localSource = mock<ProductLocalSource> {
+                onBlocking { getProducts(any()) } doAnswer { throw Exception() }
+                onBlocking { setProducts(any(), any()) } doAnswer { }
+            }
+            val remoteSource = mock<ProductRemoteSource> {
+                onBlocking { getProducts() } doAnswer { listOf(p1, p2, p3) }
+            }
+            val repository = ProductRepositoryImpl(localSource, remoteSource)
+
+            repository.get(3)
+            verify(localSource).setProducts(3, listOf())
         }
     }
 
@@ -82,8 +105,10 @@ class ProductsRepositoryImplTest {
             val repository = ProductRepositoryImpl(localSource, remoteSource)
 
             val result = repository.get(1)
-            verify(localSource).getProducts(1)
-            verify(remoteSource).getProducts()
+            inOrder(localSource, remoteSource) {
+                verify(localSource).getProducts(1)
+                verify(remoteSource).getProducts()
+            }
             assertThat(result, equalTo(listOf(p1, p2)))
         }
     }
@@ -100,8 +125,10 @@ class ProductsRepositoryImplTest {
             val repository = ProductRepositoryImpl(localSource, remoteSource)
 
             assertThrows(Exception::class.java) { runBlocking { repository.get(1) } }
-            verify(localSource).getProducts(1)
-            verify(remoteSource).getProducts()
+            inOrder(localSource, remoteSource) {
+                verify(localSource).getProducts(1)
+                verify(remoteSource).getProducts()
+            }
         }
     }
 }
