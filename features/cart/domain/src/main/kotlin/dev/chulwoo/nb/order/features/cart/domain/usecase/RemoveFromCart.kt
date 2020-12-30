@@ -8,6 +8,6 @@ data class RemoveFromCartParam(val productId: Int)
 class RemoveFromCart(private val repository: CartRepository) {
 
     suspend operator fun invoke(param: RemoveFromCartParam): Cart {
-        TODO()
+        return repository.remove(param.productId)
     }
 }
