@@ -8,7 +8,15 @@ interface CartRepository {
 
     suspend fun add(product: Product): Cart
 
+    /**
+     * 카트 내 상품 개수를 1 줄인다.
+     */
     suspend fun remove(product: Product): Cart
+
+    /**
+     * 카트 내 상품을 제거한다.
+     */
+    suspend fun delete(product: Product): Cart
 
     suspend fun clear(): Cart
 }

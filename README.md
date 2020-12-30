@@ -22,6 +22,7 @@
 * GetCart
 * AddToCart
 * RemoveFromCart
+* DeleteFromCart
 * ClearCart
 
 # 뷰 모델
@@ -62,3 +63,4 @@
   * get
   * add
   * remove
+  * delete
