@@ -1,3 +1,4 @@
+include(":features:cart:data")
 include(":features:cart:domain")
 include(
     ":app",
