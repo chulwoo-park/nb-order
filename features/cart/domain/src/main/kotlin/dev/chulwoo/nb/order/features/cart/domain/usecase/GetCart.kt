@@ -5,7 +5,5 @@ import dev.chulwoo.nb.order.features.cart.domain.repository.CartRepository
 
 class GetCart(private val repository: CartRepository) {
 
-    suspend operator fun invoke(): Cart {
-        TODO()
-    }
+    suspend operator fun invoke(): Cart = repository.getCart()
 }
