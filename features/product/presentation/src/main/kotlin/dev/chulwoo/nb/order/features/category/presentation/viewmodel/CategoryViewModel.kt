@@ -52,7 +52,6 @@ class CategoryViewModel(
     fun selectNext() {
         val selectedIndex = findSelectedIndex()
         if (selectedIndex == -1) return
-
         val currentState = states.value
         val nextIndex = selectedIndex + 1
         if (nextIndex < (currentState as CategoryState.Success).data.size) {

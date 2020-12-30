@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.asLiveData
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import dev.chulwoo.nb.order.features.category.presentation.model.Category
 import dev.chulwoo.nb.order.features.category.presentation.state.CategoryState
 import dev.chulwoo.nb.order.features.category.presentation.viewmodel.CategoryViewModel
 import dev.chulwoo.nb.order.ui.databinding.ProductFragmentBinding
@@ -52,6 +54,14 @@ class ProductFragment : Fragment() {
             }.attach()
 
             error.retryButton.setOnClickListener { categoryViewModel.load() }
+            tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab?) {
+                    tab?.let { categoryViewModel.select(it.position) }
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {}
+                override fun onTabReselected(tab: TabLayout.Tab?) {}
+            })
             categoryBefore.setOnClickListener {
                 categoryViewModel.selectBefore()
             }
@@ -76,19 +86,26 @@ class ProductFragment : Fragment() {
 
                     val categories = state.data
                     categoryAdapter.update(categories)
-                    tabLayout.getTabAt(categories.indexOfFirst { it.isSelected })?.select()
-                    categories.firstOrNull()?.let {
-                        categoryBefore.isEnabled = !it.isSelected
-                    }
-
-                    categories.lastOrNull()?.let {
-                        categoryNext.isEnabled = !it.isSelected
-                    }
+                    val selectedIndex = categories.indexOfFirst { it.isSelected }
+                    tabLayout.getTabAt(selectedIndex)?.select()
+                    updateArrows(state.data)
                 }
                 is CategoryState.Failure -> {
                     loadingIndicator.hide()
                     error.root.isVisible = true
                 }
+            }
+        }
+    }
+
+    private fun updateArrows(categories: List<Category>) {
+        with(binding) {
+            categories.firstOrNull()?.let {
+                categoryBefore.isEnabled = !it.isSelected
+            }
+
+            categories.lastOrNull()?.let {
+                categoryNext.isEnabled = !it.isSelected
             }
         }
     }

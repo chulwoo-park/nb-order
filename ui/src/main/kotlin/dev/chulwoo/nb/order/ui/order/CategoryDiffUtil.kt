@@ -17,7 +17,10 @@ class CategoryDiffUtil(
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] == newList[newItemPosition]
+        val oldItem = oldList[oldItemPosition]
+        val newItem = newList[newItemPosition]
+
+        return oldItem.id == newItem.id && oldItem.name == newItem.name
     }
 
     override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any {

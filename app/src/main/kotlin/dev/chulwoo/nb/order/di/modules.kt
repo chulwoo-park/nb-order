@@ -29,8 +29,8 @@ val dataModule = module {
 }
 
 val presentationModule = module {
-    single { CategoryViewModel(get(), Dispatchers.IO) }
-    single { ProductViewModel(get(), Dispatchers.IO) }
+    factory { CategoryViewModel(get(), Dispatchers.IO) }
+    factory { ProductViewModel(get(), Dispatchers.IO) }
 }
 
 val deviceModule = module {
