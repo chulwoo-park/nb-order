@@ -1,4 +1,4 @@
-package dev.chulwoo.nb.order.ui.order
+package dev.chulwoo.nb.order.ui.order.product
 
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DiffUtil

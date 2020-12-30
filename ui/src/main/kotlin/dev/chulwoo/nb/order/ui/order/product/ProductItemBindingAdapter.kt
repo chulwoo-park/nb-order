@@ -1,4 +1,4 @@
-package dev.chulwoo.nb.order.ui.order
+package dev.chulwoo.nb.order.ui.order.product
 
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter

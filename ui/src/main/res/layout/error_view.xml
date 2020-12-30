@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".order.ProductFragment">
+    tools:context=".order.product.ProductFragment">
 
     <TextView
         android:id="@+id/error_message"

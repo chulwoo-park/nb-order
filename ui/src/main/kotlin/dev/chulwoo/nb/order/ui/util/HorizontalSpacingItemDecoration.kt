@@ -16,7 +16,6 @@ class HorizontalSpacingItemDecoration(
         state: RecyclerView.State
     ) {
         val position = parent.getChildAdapterPosition(view)
-        val column = position % spanCount
         if (position < spanCount) {
             outRect.top = spacing
         }

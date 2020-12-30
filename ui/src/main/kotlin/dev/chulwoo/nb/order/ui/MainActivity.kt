@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import dev.chulwoo.nb.order.ui.databinding.MainActivityBinding
-import dev.chulwoo.nb.order.ui.order.ProductFragment
+import dev.chulwoo.nb.order.ui.order.product.ProductFragment
 
 class MainActivity : AppCompatActivity() {
 

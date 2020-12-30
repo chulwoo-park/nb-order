@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        tools:context=".order.ProductFragment">
+        tools:context=".order.product.ProductFragment">
 
         <androidx.cardview.widget.CardView
             android:layout_width="100dp"
