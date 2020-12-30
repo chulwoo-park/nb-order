@@ -32,11 +32,11 @@ class GetCartTest {
     fun `When invoke GetCart Then returns data from repository`() {
         runBlocking {
             val repository = mock<CartRepository> {
-                onBlocking { getCart() } doAnswer { cart1 }
+                onBlocking { get() } doAnswer { cart1 }
             }
             val getCart = GetCart(repository)
             val result = getCart()
-            verify(repository).getCart()
+            verify(repository).get()
             assertThat(result, equalTo(cart1))
         }
     }
@@ -44,7 +44,7 @@ class GetCartTest {
     @Test
     fun `Given error on repository When invoke GetCart Then rethrows error`() {
         val repository = mock<CartRepository> {
-            onBlocking { getCart() } doAnswer { throw Throwable() }
+            onBlocking { get() } doAnswer { throw Throwable() }
         }
         val getCart = GetCart(repository)
         assertThrows(Throwable::class.java) { runBlocking { getCart() } }
