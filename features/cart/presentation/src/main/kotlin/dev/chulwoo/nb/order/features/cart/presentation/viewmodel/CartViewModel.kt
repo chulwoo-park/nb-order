@@ -1,14 +1,17 @@
 package dev.chulwoo.nb.order.features.cart.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import dev.chulwoo.nb.order.features.cart.domain.usecase.AddToCart
-import dev.chulwoo.nb.order.features.cart.domain.usecase.ClearCart
-import dev.chulwoo.nb.order.features.cart.domain.usecase.GetCart
-import dev.chulwoo.nb.order.features.cart.domain.usecase.RemoveFromCart
+import androidx.lifecycle.viewModelScope
+import dev.chulwoo.nb.order.features.cart.domain.usecase.*
+import dev.chulwoo.nb.order.features.cart.presentation.model.Cart
+import dev.chulwoo.nb.order.features.cart.presentation.model.CartItem
 import dev.chulwoo.nb.order.features.cart.presentation.state.CartState
 import dev.chulwoo.nb.order.features.product.domain.model.Product
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import dev.chulwoo.nb.order.features.cart.domain.model.Cart as CartEntity
 
 class CartViewModel(
     private val getCart: GetCart,
@@ -18,21 +21,70 @@ class CartViewModel(
     private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
 
-    lateinit var states: StateFlow<CartState>
+    private val _states: MutableStateFlow<CartState> = MutableStateFlow(CartState.Initial)
+    val states: StateFlow<CartState> = _states
 
     fun load() {
-        TODO()
+        if (states.value is CartState.Loading) return
+
+        _states.value = CartState.Loading
+
+        viewModelScope.launch(dispatcher) {
+            _states.value = try {
+                val result = getCart()
+                CartState.Success(result.toPresentationModel())
+            } catch (e: Exception) {
+                CartState.Failure(getDataFromPreviousState(), e)
+            }
+        }
     }
 
-    fun addToCart(product: Product) {
-        TODO()
+    fun add(product: Product) {
+        if (states.value is CartState.Loading) return
+
+        viewModelScope.launch(dispatcher) {
+            _states.value = try {
+                val result = addToCart(AddToCartParam(product))
+                CartState.Success(result.toPresentationModel())
+            } catch (e: Exception) {
+                CartState.Failure(getDataFromPreviousState(), e)
+            }
+        }
     }
 
-    fun removeFromCart(product: Product) {
-        TODO()
+    fun remove(product: Product) {
+        if (states.value is CartState.Loading) return
+
+        viewModelScope.launch(dispatcher) {
+            _states.value = try {
+                val result = removeFromCart(RemoveFromCartParam(product))
+                CartState.Success(result.toPresentationModel())
+            } catch (e: Exception) {
+                CartState.Failure(getDataFromPreviousState(), e)
+            }
+        }
     }
 
-    fun clearCart() {
-        TODO()
+    fun clear() {
+        if (states.value is CartState.Loading) return
+
+        viewModelScope.launch(dispatcher) {
+            _states.value = try {
+                val result = clearCart()
+                CartState.Success(result.toPresentationModel())
+            } catch (e: Exception) {
+                CartState.Failure(getDataFromPreviousState(), e)
+            }
+        }
+    }
+
+    private fun getDataFromPreviousState(): Cart {
+        return if (_states.value is CartState.FinishLoadingState) {
+            (_states.value as CartState.FinishLoadingState).data
+        } else {
+            Cart()
+        }
     }
 }
+
+fun CartEntity.toPresentationModel(): Cart = Cart(products.map { CartItem(it.product, it.count) })
