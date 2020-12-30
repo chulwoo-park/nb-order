@@ -3,5 +3,6 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":features:cart:data"))
     implementation(project(":features:product:data"))
 }

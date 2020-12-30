@@ -3,5 +3,5 @@ plugins {
 }
 
 dependencies {
-    implementation(project(":features:cart:domain"))
+    api(project(":features:cart:domain"))
 }
