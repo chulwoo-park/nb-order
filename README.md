@@ -19,6 +19,7 @@
 
 * GetCategories
 * GetProducts
+* GetCart
 * AddToCart
 * RemoveFromCart
 * UpdateProductCountInCart

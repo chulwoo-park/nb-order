@@ -15,7 +15,12 @@ class CategoryRepositoryImplTest {
     fun `Given local data When invoke get Then use local data only`() {
         runBlocking {
             val localSource = mock<CategoryLocalSource> {
-                onBlocking { getCategories() } doAnswer { listOf(Category(1, "1"), Category(2, "2")) }
+                onBlocking { getCategories() } doAnswer {
+                    listOf(
+                        Category(1, "1"),
+                        Category(2, "2")
+                    )
+                }
             }
             val remoteSource = mock<CategoryRemoteSource>()
             val repository = CategoryRepositoryImpl(localSource, remoteSource)
@@ -33,7 +38,12 @@ class CategoryRepositoryImplTest {
                 onBlocking { getCategories() } doAnswer { throw Exception() }
             }
             val remoteSource = mock<CategoryRemoteSource> {
-                onBlocking { getCategories() } doAnswer { listOf(Category(1, "1"), Category(2, "2")) }
+                onBlocking { getCategories() } doAnswer {
+                    listOf(
+                        Category(1, "1"),
+                        Category(2, "2")
+                    )
+                }
             }
             val repository = CategoryRepositoryImpl(localSource, remoteSource)
 
@@ -52,7 +62,12 @@ class CategoryRepositoryImplTest {
                 onBlocking { getCategories() } doAnswer { throw Exception() }
             }
             val remoteSource = mock<CategoryRemoteSource> {
-                onBlocking { getCategories() } doAnswer { listOf(Category(1, "1"), Category(2, "2")) }
+                onBlocking { getCategories() } doAnswer {
+                    listOf(
+                        Category(1, "1"),
+                        Category(2, "2")
+                    )
+                }
             }
             val repository = CategoryRepositoryImpl(localSource, remoteSource)
 
@@ -71,7 +86,12 @@ class CategoryRepositoryImplTest {
                 onBlocking { setCategories(any()) } doAnswer { throw Exception() }
             }
             val remoteSource = mock<CategoryRemoteSource> {
-                onBlocking { getCategories() } doAnswer { listOf(Category(1, "1"), Category(2, "2")) }
+                onBlocking { getCategories() } doAnswer {
+                    listOf(
+                        Category(1, "1"),
+                        Category(2, "2")
+                    )
+                }
             }
             val repository = CategoryRepositoryImpl(localSource, remoteSource)
 
