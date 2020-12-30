@@ -6,6 +6,6 @@ import dev.chulwoo.nb.order.features.cart.domain.repository.CartRepository
 class ClearCart(private val repository: CartRepository) {
 
     suspend operator fun invoke(): Cart {
-        TODO()
+        return repository.clear()
     }
 }
