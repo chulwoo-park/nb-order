@@ -41,9 +41,13 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     packagingOptions {
         exclude("META-INF/AL2.0")
         exclude("META-INF/LGPL2.1")
+        exclude("META-INF/domain_debug.kotlin_module")
+        exclude("META-INF/presentation_debug.kotlin_module")
+        exclude("META-INF/data_debug.kotlin_module")
     }
 }
 

@@ -18,26 +18,21 @@ import org.junit.Test
 
 
 class AddToCartTest {
-    private val products =
-        listOf(
-            Product(1, 1, 2500.0, "1", ""),
-            Product(2, 1, 2500.0, "2", ""),
-            Product(3, 2, 1000.0, "3", "")
-        )
+    private val product = Product(1, 1, 2500.0, "1", "")
 
     @Test
     fun `When invoke AddToCart Then returns updated cart from repository`() {
         runBlocking {
             val repository = mock<CartRepository> {
                 onBlocking { add(any()) } doAnswer {
-                    val productId = it.arguments[0] as Int
-                    Cart(listOf(CartItem(products[productId - 1], 1)))
+                    val product = it.arguments[0] as Product
+                    Cart(listOf(CartItem(product, 1)))
                 }
             }
             val addToCart = AddToCart(repository)
-            val result = addToCart(AddToCartParam(1))
-            verify(repository).add(1)
-            assertThat(result, equalTo(Cart(listOf(CartItem(products[0], 1)))))
+            val result = addToCart(AddToCartParam(product))
+            verify(repository).add(product)
+            assertThat(result, equalTo(Cart(listOf(CartItem(product, 1)))))
         }
     }
 
@@ -47,6 +42,6 @@ class AddToCartTest {
             onBlocking { add(any()) } doAnswer { throw Exception() }
         }
         val addToCart = AddToCart(repository)
-        assertThrows(Exception::class.java) { runBlocking { addToCart(AddToCartParam(1)) } }
+        assertThrows(Exception::class.java) { runBlocking { addToCart(AddToCartParam(product)) } }
     }
 }

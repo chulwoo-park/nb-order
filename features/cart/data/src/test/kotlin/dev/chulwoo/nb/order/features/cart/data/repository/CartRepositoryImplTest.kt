@@ -6,6 +6,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import dev.chulwoo.nb.order.features.cart.data.source.CartLocalSource
 import dev.chulwoo.nb.order.features.cart.domain.model.Cart
+import dev.chulwoo.nb.order.features.product.domain.model.Product
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
@@ -14,6 +15,7 @@ import org.junit.Test
 
 class CartRepositoryImplTest {
 
+    private val product = Product(1, 1, 2500.0, "product", "")
     private val cart = Cart(listOf())
 
     @Test
@@ -47,8 +49,8 @@ class CartRepositoryImplTest {
             }
             val repository = CartRepositoryImpl(localSource)
 
-            val result = repository.add(1)
-            verify(localSource).add(1)
+            val result = repository.add(product)
+            verify(localSource).add(product)
             assertThat(result, equalTo(cart))
         }
     }
@@ -60,7 +62,7 @@ class CartRepositoryImplTest {
         }
         val repository = CartRepositoryImpl(localSource)
 
-        assertThrows(Exception::class.java) { runBlocking { repository.add(1) } }
+        assertThrows(Exception::class.java) { runBlocking { repository.add(product) } }
     }
 
     @Test
@@ -71,8 +73,8 @@ class CartRepositoryImplTest {
             }
             val repository = CartRepositoryImpl(localSource)
 
-            val result = repository.remove(1)
-            verify(localSource).remove(1)
+            val result = repository.remove(product)
+            verify(localSource).remove(product)
             assertThat(result, equalTo(cart))
         }
     }
@@ -84,7 +86,7 @@ class CartRepositoryImplTest {
         }
         val repository = CartRepositoryImpl(localSource)
 
-        assertThrows(Exception::class.java) { runBlocking { repository.remove(1) } }
+        assertThrows(Exception::class.java) { runBlocking { repository.remove(product) } }
     }
 
     @Test

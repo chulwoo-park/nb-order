@@ -1,8 +1,7 @@
 plugins {
     id("com.android.application")
-    kotlin("android")
-    id("kotlin-android")
     id("koin")
+    kotlin("android")
 }
 
 android {
@@ -46,6 +45,12 @@ android {
 
     buildFeatures {
         dataBinding = true
+    }
+
+    packagingOptions {
+        exclude("META-INF/domain_debug.kotlin_module")
+        exclude("META-INF/presentation_debug.kotlin_module")
+        exclude("META-INF/data_debug.kotlin_module")
     }
 }
 

@@ -17,12 +17,7 @@ import org.junit.Test
 
 
 class RemoveFromCartTest {
-    private val products =
-        listOf(
-            Product(1, 1, 2500.0, "1", ""),
-            Product(2, 1, 2500.0, "2", ""),
-            Product(3, 2, 1000.0, "3", "")
-        )
+    private val product = Product(1, 1, 2500.0, "1", "")
 
     private val cart1 = Cart(listOf())
 
@@ -35,8 +30,8 @@ class RemoveFromCartTest {
                 }
             }
             val removeFromCart = RemoveFromCart(repository)
-            val result = removeFromCart(RemoveFromCartParam(1))
-            verify(repository).remove(1)
+            val result = removeFromCart(RemoveFromCartParam(product))
+            verify(repository).remove(product)
             assertThat(result, equalTo(Cart(listOf())))
         }
     }
@@ -47,6 +42,10 @@ class RemoveFromCartTest {
             onBlocking { remove(any()) } doAnswer { throw Throwable() }
         }
         val removeFromCart = RemoveFromCart(repository)
-        assertThrows(Throwable::class.java) { runBlocking { removeFromCart(RemoveFromCartParam(1)) } }
+        assertThrows(Throwable::class.java) {
+            runBlocking {
+                removeFromCart(RemoveFromCartParam(product))
+            }
+        }
     }
 }
