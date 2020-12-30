@@ -11,8 +11,10 @@ import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.GridLayoutManager
 import dev.chulwoo.nb.order.features.category.presentation.state.ProductState
 import dev.chulwoo.nb.order.features.category.presentation.viewmodel.ProductViewModel
+import dev.chulwoo.nb.order.ui.R
 import dev.chulwoo.nb.order.ui.databinding.CategoryProductFragmentBinding
-import dev.chulwoo.nb.order.ui.util.GridSpacingItemDecoration
+import dev.chulwoo.nb.order.ui.util.HorizontalSpacingItemDecoration
+import dev.chulwoo.nb.order.ui.util.toDp
 import dev.chulwoo.nb.order.ui.util.toPx
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -70,11 +72,12 @@ class CategoryProductFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val spanCount = calculateSpanCount()
         binding.recyclerView.adapter = productAdapter
-        binding.recyclerView.layoutManager = GridLayoutManager(context, 3)
+        binding.recyclerView.layoutManager = GridLayoutManager(context, spanCount)
         binding.recyclerView.addItemDecoration(
-            GridSpacingItemDecoration(
-                spanCount = 3,
+            HorizontalSpacingItemDecoration(
+                spanCount = spanCount,
                 spacing = 20.toPx()
             )
         )
@@ -92,4 +95,9 @@ class CategoryProductFragment : Fragment() {
         super.onDestroyView()
     }
 
+    private fun calculateSpanCount(): Int {
+        val displayMetrics = requireContext().resources.displayMetrics
+        val width = displayMetrics.widthPixels / displayMetrics.density
+        return (width / resources.getDimensionPixelSize(R.dimen.product_width).toDp()).toInt()
+    }
 }
