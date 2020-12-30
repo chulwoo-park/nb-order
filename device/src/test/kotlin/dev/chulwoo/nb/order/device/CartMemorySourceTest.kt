@@ -84,6 +84,27 @@ class CartMemorySourceTest {
     }
 
     @Test
+    fun `Given not data When invoke delete Then returns empty cart`() {
+        runBlocking {
+            cartSource.delete(products[0])
+            assertThat(cartSource.get(), equalTo(Cart()))
+        }
+    }
+
+    @Test
+    fun `When invoke delete Then returns updated data`() {
+        runBlocking {
+            cartSource.add(products[0])
+            cartSource.add(products[0])
+            cartSource.add(products[1])
+            cartSource.delete(products[0])
+            assertThat(
+                cartSource.get(), equalTo(Cart(listOf(CartItem(products[1], 1))))
+            )
+        }
+    }
+
+    @Test
     fun `When invoke clear Then returns empty cart`() {
         runBlocking {
             cartSource.add(products[0])
