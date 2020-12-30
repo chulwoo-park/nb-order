@@ -68,7 +68,16 @@ class CartViewModel(
     }
 
     fun delete(product: Product) {
-        TODO()
+        if (states.value is CartState.Loading) return
+
+        viewModelScope.launch(dispatcher) {
+            _states.value = try {
+                val result = deleteFromCart(DeleteFromCartParam(product.toEntity()))
+                CartState.Success(result.toPresentationModel())
+            } catch (e: Exception) {
+                CartState.Failure(getDataFromPreviousState(), e)
+            }
+        }
     }
 
     fun clear() {
