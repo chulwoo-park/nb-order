@@ -12,6 +12,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":features:cart:presentation"))
     implementation(project(":features:product:presentation"))
     implementation(Dependencies.Koin.viewmodel)
     implementation(Dependencies.AndroidX.appcompat)
@@ -20,5 +21,5 @@ dependencies {
     implementation(Dependencies.AndroidX.fragment)
     implementation(Dependencies.Google.material)
     implementation(Dependencies.Glide.glide)
-    annotationProcessor(Dependencies.Glide.compiler)
+    kapt(Dependencies.Glide.compiler)
 }
