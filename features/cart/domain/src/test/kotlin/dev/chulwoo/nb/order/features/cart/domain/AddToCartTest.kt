@@ -29,14 +29,14 @@ class AddToCartTest {
     fun `When invoke AddToCart Then returns updated cart from repository`() {
         runBlocking {
             val repository = mock<CartRepository> {
-                onBlocking { addToCart(any()) } doAnswer {
+                onBlocking { add(any()) } doAnswer {
                     val productId = it.arguments[0] as Int
                     Cart(listOf(CartItem(products[productId - 1], 1)))
                 }
             }
             val addToCart = AddToCart(repository)
             val result = addToCart(AddToCartParam(1))
-            verify(repository).addToCart(1)
+            verify(repository).add(1)
             assertThat(result, equalTo(Cart(listOf(CartItem(products[0], 1)))))
         }
     }
@@ -44,7 +44,7 @@ class AddToCartTest {
     @Test
     fun `Given error on repository When invoke AddToCart Then rethrows error`() {
         val repository = mock<CartRepository> {
-            onBlocking { addToCart(any()) } doAnswer { throw Exception() }
+            onBlocking { add(any()) } doAnswer { throw Exception() }
         }
         val addToCart = AddToCart(repository)
         assertThrows(Exception::class.java) { runBlocking { addToCart(AddToCartParam(1)) } }

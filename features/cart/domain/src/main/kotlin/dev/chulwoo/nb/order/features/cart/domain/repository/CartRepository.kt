@@ -5,5 +5,5 @@ import dev.chulwoo.nb.order.features.cart.domain.model.Cart
 interface CartRepository {
     suspend fun getCart(): Cart
 
-    suspend fun addToCart(productId: Int): Cart
+    suspend fun add(productId: Int): Cart
 }

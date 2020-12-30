@@ -8,6 +8,6 @@ data class AddToCartParam(val productId: Int)
 class AddToCart(private val repository: CartRepository) {
 
     suspend operator fun invoke(param: AddToCartParam): Cart {
-        return repository.addToCart(param.productId)
+        return repository.add(param.productId)
     }
 }
