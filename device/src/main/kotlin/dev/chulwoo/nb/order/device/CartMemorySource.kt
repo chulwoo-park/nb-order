@@ -37,7 +37,8 @@ class CartMemorySource : CartLocalSource {
     }
 
     override suspend fun delete(product: Product): Cart {
-        TODO("Not yet implemented")
+        productCountMap.remove(product)
+        return get()
     }
 
     override suspend fun clear(): Cart {
